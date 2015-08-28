@@ -3,7 +3,7 @@ from datetime import datetime
 from django.db import models
 from django.contrib.auth.models import User
 from django.utils.translation import ugettext_lazy as _
-from .InsuranceInstitue import *
+from .InsuranceInstitute import *
 
 # Create your models here.
 class MedicalPatient(models.Model):
@@ -50,5 +50,5 @@ class MedicalPatient(models.Model):
     full_name = property(_get_full_name)
 	
     # Insurance Info.
-    insurance_institue = models.ForeignKey(InsuranceInstitue)
+    insurance_institue = models.ForeignKey(InsuranceInstitute)
     insurance_id = models.CharField(_("insurance_id"),max_length=255, unique=True, blank=False)

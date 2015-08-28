@@ -5,7 +5,7 @@ from django.utils.translation import ugettext_lazy as _
 
 
 # Create your models here.
-class InsuranceInstitue(models.Model):
+class InsuranceInstitute(models.Model):
     name = models.CharField(_("name"), max_length=200, unique=True)
     address = models.TextField(_("address"), null=True, blank=True)
     general_info = models.TextField(_("General Information"), null=True, blank=True)
