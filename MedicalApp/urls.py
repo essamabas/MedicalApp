@@ -16,17 +16,46 @@ Including another URLconf
 from django.conf.urls import include, url
 from django.contrib import admin
 
-urlpatterns = [
-    url(r'^admin/', include(admin.site.urls)),
-]
 
 # ----------------
 # APPs Urls
 # ----------------
-#from main.urls import MainUrlPatterns
-from authentication.urls import AuthUrlPatterns
-# Wire up our API using automatic URL routing.
-# Additionally, we include login URLs for the browsable API.
-#urlpatterns += MainUrlPatterns
-#urlpatterns += TodoUrlPatterns
-urlpatterns += AuthUrlPatterns
+
+# ----------------
+# API Routes
+# ----------------
+from rest_framework import routers
+#from api import views as api_views
+from authentication.views import *
+from LIMSPatients.views import *
+
+router = routers.DefaultRouter()
+router.register(r'InsuranceInstitute', InsuranceInstituteViewSet)
+router.register(r'Patient', PatientViewSet)
+router.register(r'Physician', PhysicianViewSet)
+router.register(r'MedicalSpeciality', MedicalSpecialityViewSet)
+router.register(r'users', UserViewSet)
+
+from django.http import HttpRequest
+from django.template import RequestContext
+
+def home(request):
+    """Renders the home page."""
+    assert isinstance(request, HttpRequest)
+    return render(
+        request,
+        'index.html',
+        context_instance = RequestContext(request,
+        {
+            'title':'Home Page',
+        })
+    )
+
+urlpatterns = [
+    url(r'^$', 'MedicalApp.urls.home', name='home'),
+    url(r'^admin/', include(admin.site.urls)),
+    url(r'^api/', include(router.urls)),
+    url(r'^api/auth/sign_in$',
+        AuthView.as_view(),
+        name='Sign In')
+]

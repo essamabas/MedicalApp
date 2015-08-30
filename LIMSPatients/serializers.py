@@ -1,13 +1,21 @@
 from django.contrib.auth.models import User, Group
 from rest_framework import serializers
+from LIMSPatients.models import *
 
-class UserSerializer(serializers.HyperlinkedModelSerializer):
+class InsuranceInstituteSerializer(serializers.HyperlinkedModelSerializer):
     class Meta:
-        model = User
-        fields = ('url', 'username', 'email', 'groups')
+        model = InsuranceInstitute
 
-
-class GroupSerializer(serializers.HyperlinkedModelSerializer):
+class PatientSerializer(serializers.HyperlinkedModelSerializer):
+    #full_name = serializers.Field('full_name')
+    #full_name = serializers.Field(source='Patient.full_name')
     class Meta:
-        model = Group
-        fields = ('url', 'name')
+        model = Patient
+
+class PhysicianSerializer(serializers.HyperlinkedModelSerializer):
+    class Meta:
+        model = Physician
+
+class MedicalSpecialitySerializer(serializers.HyperlinkedModelSerializer):
+    class Meta:
+        model = MedicalSpeciality

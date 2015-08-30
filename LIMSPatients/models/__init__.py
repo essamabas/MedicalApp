@@ -1,6 +1,6 @@
 # Include Models here to be appended to django-Models
 #from scheduler.models import *
-from .MedicalPatient import MedicalPatient
-from .InsuranceInstitute import InsuranceInstitute
+from .Patient import *
+from .InsuranceInstitute import *
 from .MedicalSpeciality import *
-from .MedicalPhysician import MedicalPhysician
+from .Physician import *

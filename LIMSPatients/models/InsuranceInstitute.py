@@ -16,9 +16,17 @@ class InsuranceInstitute(models.Model):
 		('Divorced', 'Divorced'),
 		('Married', 'Married'),		
 	)
-    insurance_institue_type = models.CharField(_("Insurance Type"),max_length=20, 
-											   choices=(
-			('state', 'State'),
-			('labour_union', 'Labour Union / Syndical'),
-			('private', 'Private'),
-			), default='private')
+    insurance_institue_type = models.CharField(
+        _("Insurance Type"),max_length=20,
+       choices=(
+           ('state', 'State'),
+           ('labour_union', 'Labour Union / Syndical'),
+           ('private', 'Private'),
+       ), default='private')
+
+    class Meta(object):
+        verbose_name = _('Insurance Institute')
+        verbose_name_plural = _('Insurance Institutes')
+
+    def __unicode__(self):
+        return self.name

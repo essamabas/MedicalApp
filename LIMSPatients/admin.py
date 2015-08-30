@@ -4,7 +4,7 @@ from django.contrib import admin
 from .models import *
 
 # Register your models here.
-admin.site.register(MedicalPatient)
+admin.site.register(Patient)
 admin.site.register(InsuranceInstitute)
-admin.site.register(MedicalPhysician)
+admin.site.register(Physician)
 admin.site.register(MedicalSpeciality)

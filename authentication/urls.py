@@ -10,9 +10,8 @@ from authentication import views
 router = routers.DefaultRouter()
 router.register(r'users', views.UserViewSet)
 
-AuthUrlPatterns = patterns(
+Urls = patterns(
     '',
-    url(r'^api/', include(router.urls)),
     url(r'^api/auth/sign_in$',
         views.AuthView.as_view(),
         name='Sign In')

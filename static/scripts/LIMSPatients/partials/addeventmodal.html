@@ -1,0 +1,29 @@
+
+<!-- <script type="text/ng-template" id="myModalContent.html"> -->
+    <div class="modal-header">
+        <h3 class="modal-title">Add Event</h3>
+    </div>
+    <div class="modal-body">
+        <form id="event_form">
+            <div class="form-group has-success has-feedback">
+                <label>Event name</label>
+                <div>
+                    <input type="text" id="newevent_name" ng-model="data.title" class="form-control" placeholder="Name of event">
+                </div>
+                <label>Description</label>
+                <div>
+                    <textarea rows="3" id="newevent_desc" ng-model="data.description" class="form-control" placeholder="Description"></textarea>
+                </div>
+            </div>
+        </form>
+    </div>
+    <div class="modal-footer">
+        <button id="event_cancel" type="cancel" class="btn btn-default btn-label-left" ng-click="cancel()"> <span><i class="fa fa-clock-o txt-danger"></i></span>Cancel</button>
+        <button id="event_submit" ng-click="add(data)" class="btn btn-primary btn-label-left pull-right"><span><i class="fa fa-clock-o"></i></span>Add</button>
+    </div>
+<!-- </script>  -->
+
+
+
+
+
