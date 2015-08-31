@@ -8,9 +8,9 @@
  */
 
 angular.module('sbAdminApp')
-  .directive('sidebar',['$location','AngularBaseUrl',function($location,AngularBaseUrl) {
+  .directive('sidebar',['$location','BaseUrl',function($location,BaseUrl) {
     return {
-      templateUrl:AngularBaseUrl.url+'scripts/directives/sidebar/sidebar.html',
+      templateUrl:BaseUrl.url+'scripts/directives/sidebar/sidebar.html',
       restrict: 'E',
       replace: true,
       scope: {

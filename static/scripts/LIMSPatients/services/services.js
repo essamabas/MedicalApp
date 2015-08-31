@@ -8,12 +8,6 @@
  * # PatientService
  * factory of the sbAdminApp
  */
-angular.module('sbAdminApp',['ngResource','ngCookies'])
-  .factory('PatientService', PatientService)
-  .factory('InsuranceInstituteService', InsuranceInstituteService)
-  .factory('MedicalSpecialityService', MedicalSpecialityService)
-;
-
 function PatientService($resource,$cookies) {
   return _genericService($resource,$cookies,'/api/Patient/:Id');
 }

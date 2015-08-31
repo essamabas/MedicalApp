@@ -18,6 +18,9 @@ function DataTableController( GenericService, DTOptionsBuilder, DTColumnDefBuild
     
     // Define Columns Layout
     GenericService.options().$promise.then(function(options) {
+        // Name of the List
+        vm.listname = options.name;
+        
         vm.options =  options.actions.POST;
         // Copy keys into vm.ColumsData
         vm.ColumnsData = Object.keys(vm.options);
@@ -39,7 +42,7 @@ function DataTableController( GenericService, DTOptionsBuilder, DTColumnDefBuild
                 // Copy to id
                 Items[i].id = Items[i].pk;
             }
-            vm.projects=Items;
+            vm.Items=Items;
             vm.dtOptions = DTOptionsBuilder.newOptions().withPaginationType('full_numbers');
         });
     };

@@ -1,11 +1,5 @@
 
 
-angular.module('sbAdminApp',['ngResource','ngCookies','datatables'])
-  .factory('PatientService', PatientService)
-  .factory('InsuranceInstituteService', InsuranceInstituteService)
-  .factory('MedicalSpecialityService', MedicalSpecialityService)
-  .controller('PatientCtrl', PatientCtrl)
-;
 
 
 
@@ -14,13 +8,13 @@ angular.module('sbAdminApp',['ngResource','ngCookies','datatables'])
 /*
 * @namespace DataTableController
 */
-function PatientCtrl( PatientService, DTOptionsBuilder, DTColumnDefBuilder, DTInstances) {
+function DataTableController( GenericService, DTOptionsBuilder, DTColumnDefBuilder, DTInstances) {
 
     var vm = this;
     
     // Delete Item Management
     vm.deleteItem = function(ItemId){
-        PatientService.delete({pk:ItemId});
+        GenericService.delete({pk:ItemId});
         vm.reloadData();
     };
 
@@ -28,7 +22,7 @@ function PatientCtrl( PatientService, DTOptionsBuilder, DTColumnDefBuilder, DTIn
     // vm.ColumnsData = ['ID', 'title', 'display_url', 'Actions'];
     
     // Define Columns Layout
-    PatientService.options().$promise.then(function(options) {
+    GenericService.options().$promise.then(function(options) {
         // Name of the List
         vm.listname = options.name;
         
@@ -48,7 +42,7 @@ function PatientCtrl( PatientService, DTOptionsBuilder, DTColumnDefBuilder, DTIn
 
     // Get Items-List
     vm.reloadData = function() {
-        PatientService.query().$promise.then(function(Items) {
+        GenericService.query().$promise.then(function(Items) {
             for (var i = 0; i < Items.length; i++) {
                 // Copy to id
                 Items[i].id = Items[i].pk;

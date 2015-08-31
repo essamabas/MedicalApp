@@ -7,9 +7,9 @@
  * # adminPosHeader
  */
 angular.module('sbAdminApp')
-    .directive('stats',function(AngularBaseUrl) {
+    .directive('stats',function(BaseUrl) {
     	return {
-  		templateUrl:AngularBaseUrl.url + 'scripts/directives/dashboard/stats/stats.html',
+  		templateUrl:BaseUrl.url + 'scripts/directives/dashboard/stats/stats.html',
   		restrict:'E',
   		replace:true,
   		scope: {

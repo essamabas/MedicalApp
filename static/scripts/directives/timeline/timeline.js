@@ -7,9 +7,9 @@
  * # adminPosHeader
  */
 angular.module('sbAdminApp')
-	.directive('timeline',function(AngularBaseUrl) {
+	.directive('timeline',function(BaseUrl) {
     return {
-        templateUrl:AngularBaseUrl.url+'scripts/directives/timeline/timeline.html',
+        templateUrl:BaseUrl.url+'scripts/directives/timeline/timeline.html',
         restrict: 'E',
         replace: true,
     }
