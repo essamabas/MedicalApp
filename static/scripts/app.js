@@ -14,7 +14,8 @@ angular
     'ui.bootstrap',
     'angular-loading-bar',
     'ngCookies',
-    'ipCookie','ng-token-auth'    
+    'ipCookie','ng-token-auth',
+    'toggle-switch'    
   ])
   
   .constant('BaseUrl', {
@@ -37,7 +38,7 @@ angular
 
     //$urlRouterProvider.otherwise('/login');
     //$urlRouterProvider.when("", "login");
-    $urlRouterProvider.when("/", "/dashboard/home");
+    //$urlRouterProvider.when("/", "/dashboard/home");
     //    
     $urlRouterProvider.otherwise('auth/login');
 
@@ -54,15 +55,8 @@ angular
                     BaseUrl.url+'scripts/directives/header/header.js',
                     BaseUrl.url+'scripts/directives/header/header-notification/header-notification.js',
                     BaseUrl.url+'scripts/directives/sidebar/sidebar.js',
-                    BaseUrl.url+'scripts/directives/sidebar/sidebar-search/sidebar-search.js'
+                    BaseUrl.url+'scripts/directives/sidebar/sidebar-search/sidebar-search.js'                    
                     ]
-                }),
-                $ocLazyLoad.load(
-                {
-                   name:'toggle-switch',
-                   files:[BaseUrl.url+"bower_components/angular-toggle-switch/angular-toggle-switch.min.js",
-                          BaseUrl.url+"bower_components/angular-toggle-switch/angular-toggle-switch.css"
-                      ]
                 })
             }
         }
@@ -76,11 +70,11 @@ angular
             return $ocLazyLoad.load({
               name:'sbAdminApp',
               files:[
-              BaseUrl.url+'scripts/controllers/main.js',
-              BaseUrl.url+'scripts/directives/timeline/timeline.js',
-              BaseUrl.url+'scripts/directives/notifications/notifications.js',
-              BaseUrl.url+'scripts/directives/chat/chat.js',
-              BaseUrl.url+'scripts/directives/dashboard/stats/stats.js'
+                  BaseUrl.url+'scripts/controllers/main.js',
+                  BaseUrl.url+'scripts/directives/timeline/timeline.js',
+                  BaseUrl.url+'scripts/directives/notifications/notifications.js',
+                  BaseUrl.url+'scripts/directives/chat/chat.js',
+                  BaseUrl.url+'scripts/directives/dashboard/stats/stats.js'
               ]
             })
           }
@@ -173,10 +167,9 @@ angular
        controller:'AuthCtrl',
        templateUrl:BaseUrl.url+'views/pages/register.html',
        url:'/register'
-   })
+   })   
       .state('dashboard.LIMS',{
         templateUrl:BaseUrl.url+'scripts/LIMSPatients/views/patient_list.html',
-        controller:'PatientCtrl',
         url:'/LIMS',
         resolve: {
             loadMyLIMS:function($ocLazyLoad){
@@ -190,10 +183,8 @@ angular
                     ]
                 })
             }
-        }
-       
+        },
+       controller:'PatientCtrl as ListCtrl'        
    })
       
   }]);
-
-    
