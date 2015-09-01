@@ -2,27 +2,6 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="2a4f65ad-b529-4ea1-b930-e42de6e37d1d" name="Default" comment="">
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/static/scripts/LIMSPatients/views/addeventmodal.html" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/static/scripts/LIMSPatients/views/books-list.html" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/static/scripts/LIMSPatients/controllers/patient.list.controller.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/static/scripts/LIMSPatients/views/patient_list.html" />
-      <change type="DELETED" beforePath="E:\MyWork\TEMP\DjangoProjects\MedicalApp\static\scripts\LIMSPatients\partials\addeventmodal.html" afterPath="" />
-      <change type="DELETED" beforePath="E:\MyWork\TEMP\DjangoProjects\MedicalApp\static\scripts\LIMSPatients\partials\books-list.html" afterPath="" />
-      <change type="DELETED" beforePath="E:\MyWork\TEMP\DjangoProjects\MedicalApp\static\scripts\LIMSPatients\partials\projects_list.html" afterPath="" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/db.sqlite3" afterPath="$PROJECT_DIR$/db.sqlite3" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/static/scripts/LIMSPatients/LIMSPatients.module.js" afterPath="$PROJECT_DIR$/static/scripts/LIMSPatients/LIMSPatients.module.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/static/scripts/app.js" afterPath="$PROJECT_DIR$/static/scripts/app.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/static/scripts/directives/chat/chat.js" afterPath="$PROJECT_DIR$/static/scripts/directives/chat/chat.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/static/scripts/LIMSPatients/controllers/datatable.controller.js" afterPath="$PROJECT_DIR$/static/scripts/LIMSPatients/controllers/datatable.controller.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/static/scripts/directives/header/header-notification/header-notification.js" afterPath="$PROJECT_DIR$/static/scripts/directives/header/header-notification/header-notification.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/static/scripts/directives/header/header.js" afterPath="$PROJECT_DIR$/static/scripts/directives/header/header.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/static/index.html" afterPath="$PROJECT_DIR$/static/index.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/static/scripts/directives/notifications/notifications.js" afterPath="$PROJECT_DIR$/static/scripts/directives/notifications/notifications.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/static/scripts/LIMSPatients/services/services.js" afterPath="$PROJECT_DIR$/static/scripts/LIMSPatients/services/services.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/static/scripts/directives/sidebar/sidebar-search/sidebar-search.js" afterPath="$PROJECT_DIR$/static/scripts/directives/sidebar/sidebar-search/sidebar-search.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/static/scripts/directives/sidebar/sidebar.js" afterPath="$PROJECT_DIR$/static/scripts/directives/sidebar/sidebar.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/static/scripts/directives/dashboard/stats/stats.js" afterPath="$PROJECT_DIR$/static/scripts/directives/dashboard/stats/stats.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/static/scripts/directives/timeline/timeline.js" afterPath="$PROJECT_DIR$/static/scripts/directives/timeline/timeline.js" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
     </list>
     <ignored path="MedicalApp.iws" />
@@ -67,7 +46,7 @@
       <file leaf-file-name="urls.py" pinned="false" current="true" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/MedicalApp/urls.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="44" column="18" selection-start="1427" selection-end="1427" vertical-scroll-proportion="0.5116279" vertical-offset="533" max-vertical-offset="1122">
+            <state line="42" column="32" selection-start="1364" selection-end="1364" vertical-scroll-proportion="0.44808742" vertical-offset="533" max-vertical-offset="1122">
               <folding />
             </state>
           </provider>
@@ -432,22 +411,28 @@
       <created>1440799160597</created>
       <updated>1440799160597</updated>
     </task>
+    <task id="LOCAL-00001" summary="V 0.0.2.1">
+      <created>1441061066031</created>
+      <updated>1441061066031</updated>
+    </task>
+    <option name="localTasksCounter" value="2" />
     <servers />
   </component>
   <component name="ToolWindowManager">
     <frame x="-8" y="-8" width="1382" height="744" extended-state="0" />
-    <editor active="false" />
+    <editor active="true" />
     <layout>
+      <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="-1" side_tool="false" content_ui="tabs" />
       <window_info id="Changes" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
-      <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.3284553" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
+      <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.3284553" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.24981412" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
-      <window_info id="Project" active="true" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.18364312" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.18364312" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
       <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.4" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="2" side_tool="true" content_ui="tabs" />
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="true" content_ui="tabs" />
       <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32682925" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
-      <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.36260164" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
+      <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.36260164" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
       <window_info id="Message" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
@@ -489,6 +474,8 @@
       <TodoPanelSettings />
     </option>
     <option name="SHOW_FILE_HISTORY_DETAILS" value="false" />
+    <MESSAGE value="V 0.0.2.1" />
+    <option name="LAST_COMMIT_MESSAGE" value="V 0.0.2.1" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -731,7 +718,7 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/MedicalApp/urls.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="44" column="18" selection-start="1427" selection-end="1427" vertical-scroll-proportion="0.5116279" vertical-offset="533" max-vertical-offset="1122">
+        <state line="42" column="32" selection-start="1364" selection-end="1364" vertical-scroll-proportion="0.44808742" vertical-offset="533" max-vertical-offset="1122">
           <folding />
         </state>
       </provider>
