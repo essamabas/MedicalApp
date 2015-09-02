@@ -18,7 +18,7 @@ angular.module('sbAdminApp')
     
     $http({
         method: 'POST',
-        url: "http://localhost:8000/api/",
+        url: "/api/",
         headers: {'Content-Type': 'application/x-www-form-urlencoded'},
         //data: {"csrfmiddlewaretoken" : $cookies.csrftoken, _method: "OPTIONS"}
         //data: "csrfmiddlewaretoken="+$cookies.csrftoken+"&_method=OPTIONS"

@@ -1,5 +1,4 @@
-
-    <div class="well">
+<div class="well">
         <div class="page-header">
             <h2> Projects List </h2>
         </div>
@@ -14,31 +13,13 @@
                 </button>
             </div>
 
-
-            <table datatable="ng" dt-options="ListCtrl.dtOptions" dt-column-defs="ListCtrl.dtColumnDefs" class="row-border hover">
-
-                <thead>
-                <!-- Repeat Columns Header -->
-                <tr >
-                    <th ng-repeat="columnData in ::ListCtrl.ColumnsData" ng-bind ="columnData"></th>
-                </tr>
-                </thead>
-                <tbody>
-
-                <tr ng-repeat="item in ::ListCtrl.Items">
-                    <td ng-bind ="item.id"></td>
-                    <td ng-bind ="item.url"></td>
-                    <td ng-bind = "item.first_name"> </td>
-                    <td>
-                        <button type="button" class="btn btn-info"> <a ng-href="/patient/{$item.id$}/view"> <i class="fa fa-eye"> </i> </a> </button>
-                        <button type="button" class="btn btn-warning"> <a ng-href="/patient/{$item.id$}/edit"> <i class="fa fa-edit"> </i> </a> </button>
-                        <button type="button" class="btn btn-danger" ng-click="ListCtrl.deleteItem(item.id);"> <i class="fa fa-trash-o"> </i>  </button>
-                    </td>
-                </tr>
-
-                </tbody>
-            </table>
+			<table class="table table-striped table-bordered" ng-DataTable="overrideOptions"
+				aa-data="sampleProductCategories"
+				ao-column-defs="columnDefs"
+				ao-Columns = "Columns"
+				fn-row-callback="myCallback"
+				>
+			</table>
 
         </div>
     </div>
-
