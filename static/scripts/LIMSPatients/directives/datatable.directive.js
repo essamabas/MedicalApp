@@ -7,7 +7,7 @@
 */
 angular.module('sbAdminApp')
 	.controller('PatientCtrl',PatientCtrl)
-	.directive('ngDataTable', function() {
+	.directive('dtTable', function() {
         return function(scope, element, attrs) {
 
             // apply DataTable options, use defaults if none specified by user

@@ -175,7 +175,7 @@ angular
       .state('dashboard.lims',{
         templateUrl:BaseUrl.url+'scripts/LIMSPatients/views/patient_list.html',
         url:'/lims',
-       controller:'PatientCtrl as ListCtrl',
+       controller:'PatientCtrl',
         resolve: {
             loadMyLIMS:function($ocLazyLoad){
                 return $ocLazyLoad.load(

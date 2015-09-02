@@ -4,7 +4,8 @@ angular.module('sbAdminApp',['ngResource','ngCookies','datatables'])
   .factory('PatientService', PatientService)
   .factory('InsuranceInstituteService', InsuranceInstituteService)
   .factory('MedicalSpecialityService', MedicalSpecialityService)
-  .controller('PatientCtrl', ['PatientService', 'DTOptionsBuilder', 'DTColumnDefBuilder', 'DTInstances', function PatientCtrl( PatientService, DTOptionsBuilder, DTColumnDefBuilder, DTInstances) {
+  .directive('dtTable', dtTable)
+  .controller('PatientCtrl', ['PatientService', function PatientCtrl( PatientService) {
       
         var vm = this;
         
