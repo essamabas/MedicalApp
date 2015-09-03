@@ -16,7 +16,8 @@ angular
     'angular-loading-bar',
     'ngCookies',
     'ipCookie','ng-token-auth',
-    'toggle-switch'
+    'toggle-switch',
+	'ngResource'
   ])
   
   .constant('BaseUrl', {
@@ -182,8 +183,7 @@ angular
                 {
                     name:'sbAdminApp',
                     files:[
-                    //BaseUrl.url+'scripts/LIMSPatients/services/services.js',
-                    BaseUrl.url+'scripts/LIMSPatients/controllers/patient.list.controller.js'
+						BaseUrl.url+'scripts/LIMSPatients/LIMSPatients.module.js'
                     ]
                 });
             }

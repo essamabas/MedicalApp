@@ -11,7 +11,6 @@ function dtTable () {
         scope: {
             aoColumnDefs: '@',
             aaData: '@',
-            aoColumnDefs: '@',
             aoColumns: '@',
             fnRowCallback: '@'              
         },

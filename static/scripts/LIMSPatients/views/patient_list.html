@@ -5,34 +5,29 @@
 			<h1 class="page-header">Patients List</h1>
 		</div>
 		<!-- /.col-lg-12 -->
+		
+		<div class="pull-right">
+
+			<button type="button" class="btn btn-info">
+				<a href="/patient/add"> <i class="fa fa-plus"></i> </a>
+			</button>
+			<button ng-click="ListCtrl.reloadData()" type="button" class="btn btn-info">
+				<i class="fa fa-refresh"></i>
+			</button>
+		</div>
+		
 	</div>
+	
+	<table class="table table-striped table-bordered" 
+		dt-table=""
+		aa-data="{{Items}}"
+		ao-column-defs="{{columnDefs}}"
+		ao-columns = "{{columns}}"
+		fn-row-callback=""
+		>
+	</table>
+	
 	<!-- /.row -->
 </div>
 
 
-<div class="well">
-        <div class="page-header">
-            <h2> Projects List </h2>
-        </div>
-        <div >
-            <div class="pull-right">
-
-                <button type="button" class="btn btn-info">
-                    <a href="/patient/add"> <i class="fa fa-plus"></i> </a>
-                </button>
-                <button ng-click="ListCtrl.reloadData()" type="button" class="btn btn-info">
-                    <i class="fa fa-refresh"></i>
-                </button>
-            </div>
-
-			<table class="table table-striped table-bordered" 
-                dt-table="{{overrideOptions}}"
-				aa-data="{{sampleProductCategories}}"
-				ao-column-defs="{{columnDefs}}"
-				ao-columns = "{{columns}}"
-				fn-row-callback="{{myCallback}}"
-				>
-			</table>
-
-        </div>
-    </div>
