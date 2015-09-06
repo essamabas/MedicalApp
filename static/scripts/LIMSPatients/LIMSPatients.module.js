@@ -11,6 +11,22 @@ angular.module('sbAdminApp')
 
 
 // Services
+function GetOPTIONS(url,$cookies) {
+    $http({
+        method: 'POST',
+        url: url,
+        headers: {'Content-Type': 'application/x-www-form-urlencoded'},
+        data: "csrfmiddlewaretoken="+$cookies.get('csrftoken')+"&_method=OPTIONS"
+    }).
+    then(function(response) {
+      console.log(response.status);
+      console.log(response.data);
+    }, function(response) {
+      console.log(response.status);
+      console.log(response.data);
+      });     
+}
+
 function PatientService($resource,$cookies) {
   return _genericService($resource,$cookies,'/api/Patient/:Id');
 }
@@ -24,10 +40,15 @@ function MedicalSpecialityService($resource,$cookies) {
 }
 
 function _genericService($resource,$cookies,URL) {
+    //options: {method : "POST", params:{ format: 'json'}, data: "csrfmiddlewaretoken="+$cookies.csrftoken+"&_method=OPTIONS"}
   return $resource(URL,
-      {'Id': '@id'}, {
+        {'Id': '@id'}, {
         query: {method: 'GET', params: { format: 'json'}, isArray: false},     
-        options: {method : "POST", params:{ format: 'json'}, data: "csrfmiddlewaretoken="+$cookies.csrftoken+"&_method=OPTIONS"}        
+        options: {
+            method : "POST", 
+            params:{ format: 'json'},
+            data: "csrfmiddlewaretoken="+$cookies.csrftoken+"&_method=OPTIONS"
+        }                
   });
 }
 
@@ -87,27 +108,16 @@ function _dataTableController( $scope, GenericService) {
 				
 				for(var i=0; i< vm.ColumnsData.length; i++) {
 					// hide url field to be shown
-					if(vm.ColumnsData[i] =="url") {
-						$scope.columnDefs.push({"mData": vm.ColumnsData[i],"aTargets": [i],"visible": false,"searchable": false});
-					} else {
-						$scope.columnDefs.push({ "mData": "category", "aTargets":[i]});
-					}
-					// Add Columns-Titles
-					$scope.columns.push({ "sTitle": vm.ColumnsData[i] });
-					// Make last Column notsortable
-					//if(i== vm.ColumnsData.length -1) {
-					//	vm.dtColumnDefs.push(DTColumnDefBuilder.newColumnDef(i).notSortable());
+					//if(vm.ColumnsData[i] =="url") {
+					//	$scope.columnDefs.push({"mData": vm.ColumnsData[i],"aTargets": [i],"visible": false,"searchable": false});
+					//} else {
+					//	$scope.columnDefs.push({"mData": "category", "aTargets":[i]});
 					//}
+					// Add Columns-Titles
+					$scope.columns.push({"aDataSort ": null, "sTitle": vm.ColumnsData[i], "bSearchable": false, "bSortable": false });
 				}
 				
 			}
-			
-            //for (var i = 0; i < Items.length; i++) {
-            //    // Copy to id
-			//	if(Items[i].pk !== undefined) {
-			//		Items[i].id = Items[i].pk;	
-			//	}
-            //}
         });
     };
 	
@@ -139,7 +149,8 @@ function dtTable () {
                     "bLengthChange": false,
                     "bFilter": false,
                     "bInfo": false,
-                    "bDestroy": true
+                    "bDestroy": true,
+                    "bSort": false,
                 };
             }
     
@@ -165,6 +176,7 @@ function dtTable () {
             }
     
             // apply the plugin
+            //var dataTable = element.dataTable(options);
             var dataTable = element.dataTable(options);
     
             // watch for any changes to our data, rebuild the DataTable
