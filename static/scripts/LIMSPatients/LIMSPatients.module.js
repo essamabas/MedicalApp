@@ -102,7 +102,7 @@ function _dataTableController( $scope, GenericService) {
 			// if Data-Results exists
 			if(data.count>0) {
 				// Get Options
-				vm.getOptions();
+				//vm.getOptions();
 				$scope.Items = data.results;
 				vm.ColumnsData = Object.keys($scope.Items[0]);
 				
@@ -111,10 +111,11 @@ function _dataTableController( $scope, GenericService) {
 					//if(vm.ColumnsData[i] =="url") {
 					//	$scope.columnDefs.push({"mData": vm.ColumnsData[i],"aTargets": [i],"visible": false,"searchable": false});
 					//} else {
-					//	$scope.columnDefs.push({"mData": "category", "aTargets":[i]});
+					//	$scope.columnDefs.push({"mData": vm.ColumnsData[i], "aTargets":[i]});
 					//}
 					// Add Columns-Titles
-					$scope.columns.push({"aDataSort ": null, "sTitle": vm.ColumnsData[i], "bSearchable": false, "bSortable": false });
+                    $scope.columnDefs.push({"mData": vm.ColumnsData[i], "aTargets":[i]});
+					$scope.columns.push({"sTitle": vm.ColumnsData[i], "bSearchable": false, "bSortable": false });
 				}
 				
 			}
@@ -150,7 +151,7 @@ function dtTable () {
                     "bFilter": false,
                     "bInfo": false,
                     "bDestroy": true,
-                    "bSort": false,
+                    "order": []
                 };
             }
     
@@ -180,9 +181,10 @@ function dtTable () {
             var dataTable = element.dataTable(options);
     
             // watch for any changes to our data, rebuild the DataTable
-            scope.$watch(attrs.aaData, function(value) {
-                var val = value || null;
-                if (val) {
+            //scope.$watch(attrs.aaData, function(value) {
+            scope.$watch(attrs.aaData, function(newVal, oldVal) {                
+                var newVal = newVal || null;
+                if (newVal) {
                     dataTable.fnClearTable();
                     dataTable.fnAddData(scope.$eval(attrs.aaData));
                 }
