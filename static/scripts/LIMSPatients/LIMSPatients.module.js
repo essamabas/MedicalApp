@@ -69,7 +69,9 @@ function _dataTableController( $scope, GenericService) {
 	
     // Initialize new service
     $scope.newItem = new GenericService();
-    
+	$scope.Items = [];
+    $scope.ListName = "Projects List"
+	
     vm.addItem = function() {
         // we can create an instance as well
         var newItem = new GenericService();
@@ -114,8 +116,8 @@ function _dataTableController( $scope, GenericService) {
 					//	$scope.columnDefs.push({"mData": vm.ColumnsData[i], "aTargets":[i]});
 					//}
 					// Add Columns-Titles
-                    $scope.columnDefs.push({"mData": vm.ColumnsData[i], "aTargets":[i]});
-					$scope.columns.push({"sTitle": vm.ColumnsData[i], "bSearchable": false, "bSortable": false });
+                    $scope.columnDefs.push({"mData": vm.ColumnsData[i], "aTargets":[i], "sDefaultContent": "Edit",});
+					//$scope.columns.push({"sTitle": vm.ColumnsData[i], "bSearchable": false, "bSortable": false });
 				}
 				
 			}
@@ -123,6 +125,7 @@ function _dataTableController( $scope, GenericService) {
     };
 	
     vm.reloadData();
+	$scope.reloadData = vm.reloadData;
 }
 
 
@@ -133,60 +136,69 @@ function dtTable () {
         scope: {
             aoColumnDefs: '@',
             aaData: '@',
-            aoColumns: '@',
+            //aoColumns: '@',
             fnRowCallback: '@'              
         },
         link: function (scope, element, attrs, controller) {
-            // apply DataTable options, use defaults if none specified by user
-            var options = {};
-            if (attrs.dtTable.length > 0) {
-                options = scope.$eval(attrs.dtTable);
-            } else {
-                options = {
-                    "bStateSave": true,
-                    "iCookieDuration": 2419200, /* 1 month */
-                    "bJQueryUI": true,
-                    "bPaginate": false,
-                    "bLengthChange": false,
-                    "bFilter": false,
-                    "bInfo": false,
-                    "bDestroy": true,
-                    "order": []
-                };
-            }
-    
-            // aoColumnDefs is dataTables way of providing fine control over column config
-            if (attrs.aoColumnDefs) {
-                options["aoColumnDefs"] = scope.$eval(attrs.aoColumnDefs);
-            }
-            
-            // Tell the dataTables plugin what columns to use
-            // We can either derive them from the dom, or use setup from the controller           
-            var explicitColumns = [];
-            element.find('th').each(function(index, elem) {
-                explicitColumns.push($(elem).text());
-            });
-            if (explicitColumns.length > 0) {
-                options["aoColumns"] = explicitColumns;
-            } else if (attrs.aoColumns) {
-                options["aoColumns"] = scope.$eval(attrs.aoColumns);
-            }
-                        
-            if (attrs.fnRowCallback) {
-                options["fnRowCallback"] = scope.$eval(attrs.fnRowCallback);
-            }
+			
+			vm = this;
+			
+			vm.updateOptions = function () {
+				// apply DataTable options, use defaults if none specified by user
+				vm.options = {};
+				if (attrs.dtTable.length > 0) {
+					vm.options = scope.$eval(attrs.dtTable);
+				} else {
+					vm.options = {
+						"bStateSave": true,
+						"iCookieDuration": 2419200, /* 1 month */
+						"bJQueryUI": true,
+						"bPaginate": false,
+						"bLengthChange": false,
+						"bFilter": false,
+						"bInfo": false,
+						"bDestroy": true,
+						"order": []
+					};
+				}
+
+				// aoColumnDefs is dataTables way of providing fine control over column config
+				if (attrs.aoColumnDefs) {
+					vm.options["aoColumnDefs"] = scope.$eval(attrs.aoColumnDefs);
+				}
+
+				// Tell the dataTables plugin what columns to use
+				// We can either derive them from the dom, or use setup from the controller           
+				var explicitColumns = [];
+				element.find('th').each(function(index, elem) {
+					explicitColumns.push($(elem).text());
+				});
+				if (explicitColumns.length > 0) {
+					options["aoColumns"] = explicitColumns;
+				} else if (attrs.aoColumns) {
+					options["aoColumns"] = scope.$eval(attrs.aoColumns);
+				}
+
+				if (attrs.fnRowCallback) {
+					options["fnRowCallback"] = scope.$eval(attrs.fnRowCallback);
+				}				
+				
+			};
+
     
             // apply the plugin
             //var dataTable = element.dataTable(options);
-            var dataTable = element.dataTable(options);
+			vm.updateOptions();
+            var dataTable = element.dataTable(vm.options);
     
             // watch for any changes to our data, rebuild the DataTable
             //scope.$watch(attrs.aaData, function(value) {
-            scope.$watch(attrs.aaData, function(newVal, oldVal) {                
-                var newVal = newVal || null;
-                if (newVal) {
+            scope.$parent.$watch(attrs.aaData, function(newVal, oldVal) {
+                if (newVal!==oldVal) {
+					vm.updateOptions();
+					dataTable = element.dataTable(options);
                     dataTable.fnClearTable();
-                    dataTable.fnAddData(scope.$eval(attrs.aaData));
+                    dataTable.fnAddData(newVal);
                 }
             });
         }
