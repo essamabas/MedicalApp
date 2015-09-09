@@ -70,7 +70,7 @@ function _dataTableController( $scope, GenericService) {
     // Initialize new service
     $scope.newItem = new GenericService();
 	$scope.Items = [];
-    $scope.ListName = "Projects List"
+    $scope.ListName = "List";
 	
     vm.addItem = function() {
         // we can create an instance as well
@@ -91,7 +91,7 @@ function _dataTableController( $scope, GenericService) {
 		// Define Columns Layout
 		GenericService.options().$promise.then(function(options) {
 			// Name of the List
-			$scope.listname = options.name;
+			$scope.ListName = options.name;
 			// Retrieve Post-Options
 			vm.PostOptions =  options.actions.POST;           
 		});		
@@ -102,22 +102,28 @@ function _dataTableController( $scope, GenericService) {
 		// Retrieve All Data
         GenericService.query().$promise.then(function(data) {
 			// if Data-Results exists
+			$scope.columnDefs = [];
+			$scope.columns = [];			
 			if(data.count>0) {
 				// Get Options
-				//vm.getOptions();
+				vm.getOptions();
 				$scope.Items = data.results;
 				vm.ColumnsData = Object.keys($scope.Items[0]);
 				
 				for(var i=0; i< vm.ColumnsData.length; i++) {
 					// hide url field to be shown
-					//if(vm.ColumnsData[i] =="url") {
-					//	$scope.columnDefs.push({"mData": vm.ColumnsData[i],"aTargets": [i],"visible": false,"searchable": false});
-					//} else {
-					//	$scope.columnDefs.push({"mData": vm.ColumnsData[i], "aTargets":[i]});
-					//}
+					if(vm.ColumnsData[i] =="url") {
+						$scope.columnDefs.push({"sTitle": "LINK","aTargets":[i],
+												"bVisible":false,
+												"mData": null,
+												//"sDefaultContent": '<button><a href="'+vm.ColumnsData[i]+'">Download</a></button>',
+												//"sDefaultContent": '<button>click</button>',
+											   });
+					} else {
+						$scope.columnDefs.push({"mData": vm.ColumnsData[i],"sTitle": vm.ColumnsData[i],"aTargets":[i]});
+						//$scope.columns.push({"mData": vm.ColumnsData[i],"sTitle": vm.ColumnsData[i], "bSearchable": true, "bSortable": true });
+					}
 					// Add Columns-Titles
-                    $scope.columnDefs.push({"mData": vm.ColumnsData[i], "aTargets":[i], "sDefaultContent": "Edit",});
-					//$scope.columns.push({"sTitle": vm.ColumnsData[i], "bSearchable": false, "bSortable": false });
 				}
 				
 			}
@@ -136,7 +142,7 @@ function dtTable () {
         scope: {
             aoColumnDefs: '@',
             aaData: '@',
-            //aoColumns: '@',
+            aoColumns: '@',
             fnRowCallback: '@'              
         },
         link: function (scope, element, attrs, controller) {
@@ -152,13 +158,15 @@ function dtTable () {
 					vm.options = {
 						"bStateSave": true,
 						"iCookieDuration": 2419200, /* 1 month */
-						"bJQueryUI": true,
-						"bPaginate": false,
-						"bLengthChange": false,
-						"bFilter": false,
-						"bInfo": false,
+						"bJQueryUI": false,
+						"bPaginate": true,
+						"bLengthChange": true,
+						"bFilter": true,
+						"bInfo": true,
 						"bDestroy": true,
-						"order": []
+						"order": [],
+						"sScrollX": "100%",
+    					"bScrollCollapse": true
 					};
 				}
 
@@ -194,11 +202,20 @@ function dtTable () {
             // watch for any changes to our data, rebuild the DataTable
             //scope.$watch(attrs.aaData, function(value) {
             scope.$parent.$watch(attrs.aaData, function(newVal, oldVal) {
-                if (newVal!==oldVal) {
+				if (!Object.is(newVal, oldVal)) {
+                //if (newVal!==oldVal) {
 					vm.updateOptions();
 					dataTable = element.dataTable(options);
                     dataTable.fnClearTable();
                     dataTable.fnAddData(newVal);
+					$('#example tbody').on( 'click', 'button', function () {
+						var data = dataTable.row( $(this).parents('tr') ).data();
+						alert( data[0] +"'s salary is: "+ data[ 5 ] );
+					} );
+					$('#example tbody').on( 'click', 'tr', function () {
+						console.log( dataTable.fnGetData( this ) );				
+					} );
+					
                 }
             });
         }

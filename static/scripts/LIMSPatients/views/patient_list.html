@@ -9,23 +9,23 @@
 		<div class="pull-right">
 
 			<button type="button" class="btn btn-info">
-				<a href="/patient/add"> <i class="fa fa-plus"></i> </a>
+				<a ui-sref="/patient/add"> <i class="fa fa-plus"></i> </a>
 			</button>
 			<button ng-click="reloadData()" type="button" class="btn btn-info">
 				<i class="fa fa-refresh"></i>
 			</button>
 		</div>
-		
-	</div>
-	
-	<table class="table table-striped table-bordered" 
-		dt-table=""
-		aa-data="Items"
-		ao-column-defs="{{columnDefs}}"
-		ao-columns = "{{columns}}"
-		fn-row-callback=""
-		>
-	</table>
+	</div>	
+	<div class="row">	
+		<table id="example" class="table table-striped table-bordered" 
+			dt-table=""
+			aa-data="Items"
+			ao-column-defs="{{columnDefs}}"
+			ao-columns = "{{columns}}"
+			fn-row-callback=""
+			>
+		</table>
+	</div>		
 	
 	<!-- /.row -->
 </div>

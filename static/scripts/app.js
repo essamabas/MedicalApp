@@ -45,7 +45,7 @@ angular
     //$urlRouterProvider.when("/", "/dashboard/home");
     //    
     //$urlRouterProvider.otherwise('auth/login');
-	$urlRouterProvider.otherwise('dashboard/lims');
+	$urlRouterProvider.otherwise('dashboard/patient');
 
     $stateProvider
       .state('dashboard', {
@@ -173,9 +173,9 @@ angular
        templateUrl:BaseUrl.url+'views/pages/register.html',
        url:'/register'
    })   
-      .state('dashboard.lims',{
+      .state('dashboard.patient',{
         templateUrl:BaseUrl.url+'scripts/LIMSPatients/views/patient_list.html',
-        url:'/lims',
+        url:'/patient',
        controller:'PatientCtrl',
         resolve: {
             loadMyLIMS:function($ocLazyLoad){
