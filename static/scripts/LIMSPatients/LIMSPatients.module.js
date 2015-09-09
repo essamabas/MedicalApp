@@ -10,7 +10,9 @@ angular.module('sbAdminApp')
 ;
 
 
+// --------------------------------------
 // Services
+// --------
 function GetOPTIONS(url,$cookies) {
     $http({
         method: 'POST',
@@ -52,16 +54,17 @@ function _genericService($resource,$cookies,URL) {
   });
 }
 
-
-// Controllers
+// --------------------------------------------
+// Controllers 
+// -----------
 function PatientCtrl($scope, PatientService) {
   return _dataTableController($scope, PatientService);
 }
 
-/*
-* @namespace DataTableController
+/** 
+* @namespace _dataTableController
 */
-function _dataTableController( $scope, GenericService) {
+function _dataTableController( $scope, GenericService, ViewUrl, EditUrl, AddUrl) {
 
     var vm = this;
 	$scope.columnDefs = [];
@@ -86,7 +89,46 @@ function _dataTableController( $scope, GenericService) {
 
     // Define Columns Layout
     // vm.ColumnsData = ['ID', 'title', 'display_url', 'Actions'];
+
+
+	//  Helper for open ModalBox with requested header, content and bottom
+	function OpenModalBox(header, inner, bottom){
+		var modalbox = $('#modalbox');
+		modalbox.find('.modal-header-name span').html(header);
+		modalbox.find('.devoops-modal-inner').html(inner);
+		modalbox.find('.devoops-modal-bottom').html(bottom);
+		modalbox.fadeIn('fast');
+		$('body').addClass("body-expanded");
+	}
+
+	//  Close modalbox
+	function CloseModalBox(){
+		var modalbox = $('#modalbox');
+		modalbox.fadeOut('fast', function(){
+			modalbox.find('.modal-header-name span').children().remove();
+			modalbox.find('.devoops-modal-inner').children().remove();
+			modalbox.find('.devoops-modal-bottom').children().remove();
+			$('body').removeClass("body-expanded");
+		});
+	}
+
     
+	// handle Row-Click
+	vm.fnRowCallback = function(aData) {
+		if(aData !== undefined) {
+			if(aData.url!==undefined) {
+				$state.go('login');	
+			}
+		}
+		
+		$('td:eq(2)', nRow).bind('click', function() {
+			$scope.$apply(function() {
+				$scope.someClickHandler(aData);
+			});
+		});
+		return nRow;
+	};
+			
 	vm.getOptions = function() {
 		// Define Columns Layout
 		GenericService.options().$promise.then(function(options) {
@@ -135,7 +177,9 @@ function _dataTableController( $scope, GenericService) {
 }
 
 
+// ----------------------------------------------------
 // Directives
+// ----------
 function dtTable () {
     return {
         restrict: 'E, A, C',
@@ -147,8 +191,8 @@ function dtTable () {
         },
         link: function (scope, element, attrs, controller) {
 			
+			// Reference this element
 			vm = this;
-			
 			vm.updateOptions = function () {
 				// apply DataTable options, use defaults if none specified by user
 				vm.options = {};
