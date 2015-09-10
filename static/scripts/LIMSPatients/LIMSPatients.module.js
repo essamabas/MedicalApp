@@ -64,7 +64,7 @@ function PatientCtrl($scope, PatientService) {
 /** 
 * @namespace _dataTableController
 */
-function _dataTableController( $scope, GenericService, ViewUrl, EditUrl, AddUrl) {
+function _dataTableController( $scope, GenericService, EditUrl, AddUrl) {
 
     var vm = this;
 	$scope.columnDefs = [];
@@ -114,19 +114,12 @@ function _dataTableController( $scope, GenericService, ViewUrl, EditUrl, AddUrl)
 
     
 	// handle Row-Click
-	vm.fnRowCallback = function(aData) {
+	$scope.fnRowCallback = function(aData) {
 		if(aData !== undefined) {
 			if(aData.url!==undefined) {
-				$state.go('login');	
+				$state.go(EditUrl);	
 			}
 		}
-		
-		$('td:eq(2)', nRow).bind('click', function() {
-			$scope.$apply(function() {
-				$scope.someClickHandler(aData);
-			});
-		});
-		return nRow;
 	};
 			
 	vm.getOptions = function() {
@@ -187,7 +180,7 @@ function dtTable () {
             aoColumnDefs: '@',
             aaData: '@',
             aoColumns: '@',
-            fnRowCallback: '@'              
+            fnRowCallback: '='              
         },
         link: function (scope, element, attrs, controller) {
 			
@@ -226,25 +219,21 @@ function dtTable () {
 					explicitColumns.push($(elem).text());
 				});
 				if (explicitColumns.length > 0) {
-					options["aoColumns"] = explicitColumns;
+					vm.options["aoColumns"] = explicitColumns;
 				} else if (attrs.aoColumns) {
-					options["aoColumns"] = scope.$eval(attrs.aoColumns);
+					//vm.options["aoColumns"] = scope.$eval(attrs.aoColumns);
 				}
-
-				if (attrs.fnRowCallback) {
-					options["fnRowCallback"] = scope.$eval(attrs.fnRowCallback);
-				}				
-				
+				//if (attrs.fnRowCallback) {
+				//	vm.options["fnRowCallback"] = scope.$eval(attrs.fnRowCallback);
+				//}
 			};
 
     
             // apply the plugin
-            //var dataTable = element.dataTable(options);
-			vm.updateOptions();
-            var dataTable = element.dataTable(vm.options);
+			//vm.updateOptions();
+            //var dataTable = element.dataTable(vm.options);
     
             // watch for any changes to our data, rebuild the DataTable
-            //scope.$watch(attrs.aaData, function(value) {
             scope.$parent.$watch(attrs.aaData, function(newVal, oldVal) {
 				if (!Object.is(newVal, oldVal)) {
                 //if (newVal!==oldVal) {
@@ -252,14 +241,10 @@ function dtTable () {
 					dataTable = element.dataTable(options);
                     dataTable.fnClearTable();
                     dataTable.fnAddData(newVal);
-					$('#example tbody').on( 'click', 'button', function () {
-						var data = dataTable.row( $(this).parents('tr') ).data();
-						alert( data[0] +"'s salary is: "+ data[ 5 ] );
-					} );
-					$('#example tbody').on( 'click', 'tr', function () {
-						console.log( dataTable.fnGetData( this ) );				
-					} );
-					
+					$('#dttable tbody').on( 'click', 'tr', function () {
+						//console.log( dataTable.fnGetData( this ) );
+						scope.fnRowCallback(dataTable.fnGetData( this ));				
+					});
                 }
             });
         }
