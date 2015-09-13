@@ -45,7 +45,7 @@ angular
     //$urlRouterProvider.when("/", "/dashboard/home");
     //    
     //$urlRouterProvider.otherwise('auth/login');
-	$urlRouterProvider.otherwise('dashboard/patient');
+	$urlRouterProvider.otherwise('/patient');
 
     $stateProvider
       .state('dashboard', {
@@ -174,8 +174,9 @@ angular
        url:'/register'
    })   
       .state('dashboard.patient',{
-        templateUrl:BaseUrl.url+'scripts/LIMSPatients/views/patient_list.html',
-        url:'/patient',
+        templateUrl:BaseUrl.url+'scripts/LIMSPatients/views/patient.list.html',
+        // prefix ^ means absolute urls
+        url:'^/patient', 
        controller:'PatientCtrl',
         resolve: {
             loadMyLIMS:function($ocLazyLoad){
@@ -183,11 +184,26 @@ angular
                 {
                     name:'sbAdminApp',
                     files:[
-						BaseUrl.url+'scripts/LIMSPatients/LIMSPatients.module.js'
+						          BaseUrl.url+'scripts/LIMSPatients/LIMSPatients.module.js'
                     ]
                 });
             }
         }        
    })
-;      
+      .state('dashboard.patient.view', {
+          url: "^/patient/:id/view",
+          templateUrl: BaseUrl.url+'scripts/LIMSPatients/views/patient.view.html',
+          controller: 'PatientCtrl'
+    })
+      .state('dashboard.patient.edit', {
+          url: "^/patient/:id/edit",
+          templateUrl: BaseUrl.url+'scripts/LIMSPatients/views/patient.edit.html',
+          controller: 'PatientCtrl'
+    })
+      .state('dashboard.patient.add', {
+          url: "^/patient/:id/add",
+          templateUrl: BaseUrl.url+'scripts/LIMSPatients/views/patient.add.html',
+          controller: 'PatientCtrl'
+    })       
+;
   }]);

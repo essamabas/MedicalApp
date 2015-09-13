@@ -40,8 +40,9 @@ class Patient(models.Model):
                                  help_text="Flag to indicate that the patient is active. - it can be compared with last activity date, such as: updated_on/death_date/..")
 
     def _get_age(self):
-        now = datetime.now()
-        return now - self.birth_date
+        today = datetime.now()
+        #return today.year - self.birth_date.year - ((today.month, today.day) < (self.birth_date.month, self.birth_date.day))
+        return str(today.year - self.birth_date.year) + " Years - " + str(today.month - self.birth_date.month+1) + "  Months - " + str(today.day - self.birth_date.day) + " Days"
     age = property(_get_age)
 
     def _get_full_name(self):

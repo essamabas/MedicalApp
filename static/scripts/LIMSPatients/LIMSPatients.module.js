@@ -1,7 +1,7 @@
 
 
 angular.module('sbAdminApp')
-  .factory('PatientService', ['$resource','$cookies', PatientService])
+  .factory('PatientService', ['$resource','$cookies', '$http', PatientService])
   .factory('InsuranceInstituteService', InsuranceInstituteService)
   .factory('MedicalSpecialityService', MedicalSpecialityService)
   .directive('dtTable', dtTable)
@@ -29,8 +29,8 @@ function GetOPTIONS(url,$cookies) {
       });     
 }
 
-function PatientService($resource,$cookies) {
-  return _genericService($resource,$cookies,'/api/Patient/:Id');
+function PatientService($resource,$cookies,$http) {
+  return _genericService($resource,$cookies,$http,'/api/Patient/:Id');
 }
 
 function InsuranceInstituteService($resource,$cookies) {
@@ -41,17 +41,35 @@ function MedicalSpecialityService($resource,$cookies) {
   return _genericService($resource,$cookies,'/api/MedicalSpeciality/:Id');
 }
 
-function _genericService($resource,$cookies,URL) {
+function _genericService($resource,$cookies,$http, URL) {
     //options: {method : "POST", params:{ format: 'json'}, data: "csrfmiddlewaretoken="+$cookies.csrftoken+"&_method=OPTIONS"}
-  return $resource(URL,
-        {'Id': '@id'}, {
-        query: {method: 'GET', params: { format: 'json'}, isArray: false},     
-        options: {
-            method : "POST", 
-            params:{ format: 'json'},
-            data: "csrfmiddlewaretoken="+$cookies.csrftoken+"&_method=OPTIONS"
-        }                
-  });
+	var service = $resource(URL,
+		{'Id': '@id'}, {
+		query: {method: 'GET', params: { format: 'json'}, isArray: false}                     
+	});
+	// Add URL to Service Provider - needed to navigate Controllers to Add/Edit/View Pages
+	service.url = function() {
+		var url = URL;
+		if(URL.lastIndexOf("/:")> -1) {
+			url =  URL.slice(0,URL.lastIndexOf("/:")+1);
+		}
+		return url; 		
+	}
+	// add any methods here using prototype
+	service.options = function() {
+		var url = URL;
+		if(URL.lastIndexOf("/:")> -1) {
+			url =  URL.slice(0,URL.lastIndexOf("/:")+1);
+		} 
+		return $http({
+			method: 'POST',
+			url: url,
+			headers: {'Content-Type': 'application/x-www-form-urlencoded'},
+			params:{"format": "json"},
+			data: "csrfmiddlewaretoken="+$cookies.get('csrftoken')+"&_method=OPTIONS"
+		})
+	};
+	return service;  
 }
 
 // --------------------------------------------
@@ -67,13 +85,16 @@ function PatientCtrl($scope, PatientService) {
 function _dataTableController( $scope, GenericService, EditUrl, AddUrl) {
 
     var vm = this;
+	// Initialize Post-Options
+	vm.PostOptions = {};
+	
 	$scope.columnDefs = [];
 	$scope.columns = [];
 	
     // Initialize new service
     $scope.newItem = new GenericService();
 	$scope.Items = [];
-    $scope.ListName = "List";
+    $scope.ListName = "List";	
 	
     vm.addItem = function() {
         // we can create an instance as well
@@ -90,83 +111,73 @@ function _dataTableController( $scope, GenericService, EditUrl, AddUrl) {
     // Define Columns Layout
     // vm.ColumnsData = ['ID', 'title', 'display_url', 'Actions'];
 
-
-	//  Helper for open ModalBox with requested header, content and bottom
-	function OpenModalBox(header, inner, bottom){
-		var modalbox = $('#modalbox');
-		modalbox.find('.modal-header-name span').html(header);
-		modalbox.find('.devoops-modal-inner').html(inner);
-		modalbox.find('.devoops-modal-bottom').html(bottom);
-		modalbox.fadeIn('fast');
-		$('body').addClass("body-expanded");
-	}
-
-	//  Close modalbox
-	function CloseModalBox(){
-		var modalbox = $('#modalbox');
-		modalbox.fadeOut('fast', function(){
-			modalbox.find('.modal-header-name span').children().remove();
-			modalbox.find('.devoops-modal-inner').children().remove();
-			modalbox.find('.devoops-modal-bottom').children().remove();
-			$('body').removeClass("body-expanded");
+	vm.getOptions = function() {
+		// Define Columns Layout
+		GenericService.options().then(function(options) {
+			if(options.data!== undefined) {
+				// Name of the List
+				$scope.ListName = options.data.name;
+				// Retrieve Post-Options
+				vm.PostOptions =  options.data.actions.POST; 
+				// Get Data
+				vm.reloadData(); 				
+			}
 		});
-	}
-
-    
-	// handle Row-Click
+	};
+	
+    // Get Items-List
+    vm.reloadData = function() {
+		// Retrieve All Data
+		if(vm.PostOptions !=={}) {
+			GenericService.query().$promise.then(function(data) {
+				// if Data-Results exists
+				$scope.columnDefs = [];
+				$scope.columns = [];			
+				if(data.count>0) {
+					// Get Options
+					$scope.Items = data.results;
+					vm.ColumnsData = Object.keys($scope.Items[0]);
+					
+					for(var i=0; i< vm.ColumnsData.length; i++) {
+						// hide type -fields to be shown
+						if (vm.PostOptions[vm.ColumnsData[i]].type == "field") {
+							if(vm.ColumnsData[i] =="url") {
+								$scope.columnDefs.push({"sTitle": "Actions","aTargets":[i],
+														"bVisible":true,
+														"mData": null,
+														//"sDefaultContent": '<button><a href="'+vm.ColumnsData[i]+'">Download</a></button>',
+														"sDefaultContent": '<button type="button" class="btn btn-primary btn-circle"><i class="glyphicon glyphicon-edit"></i></button>',
+													});
+							} else {
+								$scope.columnDefs.push({"sTitle": "","aTargets":[i],
+														"bVisible":false,
+														"mData": null
+													});								
+							}
+						} else {
+							$scope.columnDefs.push({"mData": vm.ColumnsData[i],"sTitle": vm.ColumnsData[i],"aTargets":[i]});
+							//$scope.columns.push({"mData": vm.ColumnsData[i],"sTitle": vm.ColumnsData[i], "bSearchable": true, "bSortable": true });
+						}
+					}
+				}
+			});
+		}
+    };
+	
+	// Call Options
+    vm.getOptions();
+	
+	// Link Template to Controller
+	$scope.PostOptions = vm.PostOptions;
+	$scope.reloadData = vm.reloadData;
+	// handle Table Row-Click
 	$scope.fnRowCallback = function(aData) {
 		if(aData !== undefined) {
 			if(aData.url!==undefined) {
 				$state.go(EditUrl);	
 			}
 		}
-	};
-			
-	vm.getOptions = function() {
-		// Define Columns Layout
-		GenericService.options().$promise.then(function(options) {
-			// Name of the List
-			$scope.ListName = options.name;
-			// Retrieve Post-Options
-			vm.PostOptions =  options.actions.POST;           
-		});		
-	};
-	
-    // Get Items-List
-    vm.reloadData = function() {
-		// Retrieve All Data
-        GenericService.query().$promise.then(function(data) {
-			// if Data-Results exists
-			$scope.columnDefs = [];
-			$scope.columns = [];			
-			if(data.count>0) {
-				// Get Options
-				vm.getOptions();
-				$scope.Items = data.results;
-				vm.ColumnsData = Object.keys($scope.Items[0]);
-				
-				for(var i=0; i< vm.ColumnsData.length; i++) {
-					// hide url field to be shown
-					if(vm.ColumnsData[i] =="url") {
-						$scope.columnDefs.push({"sTitle": "LINK","aTargets":[i],
-												"bVisible":false,
-												"mData": null,
-												//"sDefaultContent": '<button><a href="'+vm.ColumnsData[i]+'">Download</a></button>',
-												//"sDefaultContent": '<button>click</button>',
-											   });
-					} else {
-						$scope.columnDefs.push({"mData": vm.ColumnsData[i],"sTitle": vm.ColumnsData[i],"aTargets":[i]});
-						//$scope.columns.push({"mData": vm.ColumnsData[i],"sTitle": vm.ColumnsData[i], "bSearchable": true, "bSortable": true });
-					}
-					// Add Columns-Titles
-				}
-				
-			}
-        });
-    };
-	
-    vm.reloadData();
-	$scope.reloadData = vm.reloadData;
+	};	
 }
 
 
@@ -223,22 +234,18 @@ function dtTable () {
 				} else if (attrs.aoColumns) {
 					//vm.options["aoColumns"] = scope.$eval(attrs.aoColumns);
 				}
-				//if (attrs.fnRowCallback) {
+				//if (attrs.fnRow\Callback) {
 				//	vm.options["fnRowCallback"] = scope.$eval(attrs.fnRowCallback);
 				//}
 			};
-
-    
-            // apply the plugin
-			//vm.updateOptions();
-            //var dataTable = element.dataTable(vm.options);
     
             // watch for any changes to our data, rebuild the DataTable
             scope.$parent.$watch(attrs.aaData, function(newVal, oldVal) {
 				if (!Object.is(newVal, oldVal)) {
                 //if (newVal!==oldVal) {
+					// apply the plugin				
 					vm.updateOptions();
-					dataTable = element.dataTable(options);
+					var dataTable = element.dataTable(options);
                     dataTable.fnClearTable();
                     dataTable.fnAddData(newVal);
 					$('#dttable tbody').on( 'click', 'tr', function () {
@@ -250,3 +257,43 @@ function dtTable () {
         }
     };
 }
+
+
+// ----------------------------------------------------
+// Directives
+// ----------
+function FormDirective () {
+    return {
+        restrict: 'E, A, C',
+        scope: {
+            //fmData: '@',
+            fmOptions: '='              
+        },
+        link: function (scope, element, attrs, controller) {
+		}
+	};	
+}	
+
+// ----------------------------------------------------
+// General
+// ----------
+	//  Helper for open ModalBox with requested header, content and bottom
+	function OpenModalBox(header, inner, bottom){
+		var modalbox = $('#modalbox');
+		modalbox.find('.modal-header-name span').html(header);
+		modalbox.find('.devoops-modal-inner').html(inner);
+		modalbox.find('.devoops-modal-bottom').html(bottom);
+		modalbox.fadeIn('fast');
+		$('body').addClass("body-expanded");
+	}
+
+	//  Close modalbox
+	function CloseModalBox(){
+		var modalbox = $('#modalbox');
+		modalbox.fadeOut('fast', function(){
+			modalbox.find('.modal-header-name span').children().remove();
+			modalbox.find('.devoops-modal-inner').children().remove();
+			modalbox.find('.devoops-modal-bottom').children().remove();
+			$('body').removeClass("body-expanded");
+		});
+	}

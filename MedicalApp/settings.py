@@ -138,3 +138,6 @@ REST_FRAMEWORK = {
         'rest_framework.parsers.JSONParser',
     )
 }
+
+# Default Currency Used
+DEFAULT_CURRENCY_USED = 'EGP'
