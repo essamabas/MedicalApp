@@ -45,7 +45,7 @@ angular
     //$urlRouterProvider.when("/", "/dashboard/home");
     //    
     //$urlRouterProvider.otherwise('auth/login');
-	$urlRouterProvider.otherwise('/patient');
+	$urlRouterProvider.otherwise('/Patient');
 
     $stateProvider
       .state('dashboard', {
@@ -176,7 +176,7 @@ angular
       .state('dashboard.patient',{
         templateUrl:BaseUrl.url+'scripts/LIMSPatients/views/patient.list.html',
         // prefix ^ means absolute urls
-        url:'^/patient', 
+        url:'^/Patient', 
        controller:'PatientCtrl',
         resolve: {
             loadMyLIMS:function($ocLazyLoad){
@@ -191,17 +191,17 @@ angular
         }        
    })
       .state('dashboard.patient.view', {
-          url: "^/patient/:id/view",
+          url: "^/Patient/:id/view",
           templateUrl: BaseUrl.url+'scripts/LIMSPatients/views/patient.view.html',
           controller: 'PatientCtrl'
     })
       .state('dashboard.patient.edit', {
-          url: "^/patient/:id/edit",
+          url: "^/Patient/:id/edit",
           templateUrl: BaseUrl.url+'scripts/LIMSPatients/views/patient.edit.html',
           controller: 'PatientCtrl'
     })
       .state('dashboard.patient.add', {
-          url: "^/patient/:id/add",
+          url: "^/Patient/:id/add",
           templateUrl: BaseUrl.url+'scripts/LIMSPatients/views/patient.add.html',
           controller: 'PatientCtrl'
     })       

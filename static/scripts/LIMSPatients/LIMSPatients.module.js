@@ -145,6 +145,7 @@ function _dataTableController( $scope, GenericService, EditUrl, AddUrl) {
 								$scope.columnDefs.push({"sTitle": "Actions","aTargets":[i],
 														"bVisible":true,
 														"mData": null,
+														"className": 'select-checkbox',
 														//"sDefaultContent": '<button><a href="'+vm.ColumnsData[i]+'">Download</a></button>',
 														"sDefaultContent": '<button type="button" class="btn btn-primary btn-circle"><i class="glyphicon glyphicon-edit"></i></button>',
 													});
@@ -174,7 +175,10 @@ function _dataTableController( $scope, GenericService, EditUrl, AddUrl) {
 	$scope.fnRowCallback = function(aData) {
 		if(aData !== undefined) {
 			if(aData.url!==undefined) {
-				$state.go(EditUrl);	
+				var ViewUrl = aData.url.replace("api","#");
+				ViewUrl = ViewUrl.replace("?format=json","view");
+				window.location.href = ViewUrl; 
+				//$state.go(EditUrl);	
 			}
 		}
 	};	
@@ -214,7 +218,7 @@ function dtTable () {
 						"bDestroy": true,
 						"order": [],
 						"sScrollX": "100%",
-    					"bScrollCollapse": true
+    					"bScrollCollapse": true						
 					};
 				}
 
@@ -262,14 +266,79 @@ function dtTable () {
 // ----------------------------------------------------
 // Directives
 // ----------
-function FormDirective () {
+function FormViewDirective () {
     return {
         restrict: 'E, A, C',
         scope: {
-            //fmData: '@',
+            fmData: '=',
             fmOptions: '='              
         },
         link: function (scope, element, attrs, controller) {
+			
+			if((scope.fmData!== undefined) && (scope.fmOptions!== undefined)){
+				for (var field in scope.fmData) {
+					var data = scope.fmData['field'];
+					var div = document.createElement('div');
+					div.className = 'has-feedback form-group';
+
+					var option = scope.fmOptions[field];
+					if(option.type =="boolean") {
+						
+						// append checkbox-inline
+						var inputclass = ' form-control ng-pristine ';
+						var inputattributes = ' id="id_'+field +'" name="' + field + '" ng-model="' + field + '" + type="checkbox" ';
+						var div_ul = '<ul class="djng-form-control-feedback djng-field-errors" ng-show="myform.'+ field + '.$dirty"> ';
+						div_ul += 	 '  <li ng-show="myform.'+ field + '.$valid" class="valid"></li>';
+												
+						div.innerHTML = '<label class="checkbox-inline"> ' + option.label + ' </label>';
+						div.innerHTML += '<input ' + inputattributes +  ' class="' + inputclass + '" >';
+						div.innerHTML +=  data;
+						if(option.help_text !== undefined) {
+							// Insert help-block
+							div.innerHTML += '<span class="help-block">' + option.help_text + '</span>';	
+						}
+						div.innerHTML += div_ul;
+						div.innerHTML += '</ul>';
+						div.innerHTML += '<ul class="djng-form-control-feedback djng-field-errors ng-hide" ng-show="myform.'+ field + '.$pristine"></ul>';
+					
+					} else if(option.type =="string") {
+						
+						// append input-box
+						var inputclass = ' form-control ng-pristine ';
+						var inputattributes = ' id="id_'+field +'" name="' + field + '" ng-model="' + field + '" + type="text" ';
+						var div_ul = '<ul class="djng-form-control-feedback djng-field-errors" ng-show="myform.'+ field + '.$dirty"> ';
+						div_ul += 	 '  <li ng-show="myform.'+ field + '.$valid" class="valid"></li>';
+						
+						if(option.required) {
+							inputclass += ' ng-invalid ng-invalid-required ';
+							inputattributes += ' required="required" ';
+						}
+						if(option.min_length!== undefined) {
+							inputclass += ' ng-valid-minlength ';
+							inputattributes += ' minlength="' + option.min_length + '" ng-minlength="' + option.min_length + '" ';
+							div_ul += '<li ng-show="myform.'+ field + '.$error.minlength" class="invalid ng-hide">Ensure this value has at least '+ option.min_length + ' characters</li>';							
+						}
+						if(option.max_length!== undefined) {
+							inputclass += ' ng-valid-maxlength ';
+							inputattributes += ' maxlength="' + option.max_length + '" ng-maxlength="' + option.max_length + '" ';
+							div_ul += '<li ng-show="myform.'+ field + '.$error.maxlength" class="invalid ng-hide">Ensure this value has at most '+ option.max_length + ' characters</li>';							
+						}
+						// insert label/input					
+						div.innerHTML = '<label class="control-label" for="id_'+field + '" >' + option.label + ' </label>
+						div.innerHTML += '<input ' + inputattributes +  ' class="' + inputclass + '" >';
+						div.innerHTML +=  data;
+						if(option.help_text !== undefined) {
+							// Insert help-block
+							div.innerHTML += '<span class="help-block">' + option.help_text + '</span>';	
+						}
+						// insert ul
+						div.innerHTML += div_ul;
+						div.innerHTML += '</ul>';
+						div.innerHTML += '<ul class="djng-form-control-feedback djng-field-errors ng-hide" ng-show="myform.'+ field + '.$pristine"></ul>';						
+					}
+				}
+				
+			}
 		}
 	};	
 }	

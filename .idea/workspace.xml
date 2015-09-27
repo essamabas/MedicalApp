@@ -1,11 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="2a4f65ad-b529-4ea1-b930-e42de6e37d1d" name="Default" comment="">
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/LIMSPatients/models/Currency.py" afterPath="$PROJECT_DIR$/LIMSPatients/models/Currency.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/LIMSPatients/models/LabTest.py" afterPath="$PROJECT_DIR$/LIMSPatients/models/LabTest.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-    </list>
+    <list default="true" id="2a4f65ad-b529-4ea1-b930-e42de6e37d1d" name="Default" comment="" />
     <ignored path="MedicalApp.iws" />
     <ignored path=".idea/workspace.xml" />
     <option name="TRACKING_ENABLED" value="true" />
@@ -66,7 +62,7 @@
       <file leaf-file-name="Currency.py" pinned="false" current="true" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/LIMSPatients/models/Currency.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="18" column="22" selection-start="810" selection-end="810" vertical-scroll-proportion="0.5690141" vertical-offset="104" max-vertical-offset="459">
+            <state line="13" column="0" selection-start="472" selection-end="472" vertical-scroll-proportion="0.32957748" vertical-offset="104" max-vertical-offset="459">
               <folding>
                 <element signature="e#1#29#0" expanded="true" />
               </folding>
@@ -531,7 +527,7 @@
       <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.3987034" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="2" side_tool="true" content_ui="tabs" />
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="true" content_ui="tabs" />
-      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.3273906" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
+      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.3273906" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.36142626" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
       <window_info id="Message" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
@@ -922,7 +918,7 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/LIMSPatients/models/Currency.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="18" column="22" selection-start="810" selection-end="810" vertical-scroll-proportion="0.5690141" vertical-offset="104" max-vertical-offset="459">
+        <state line="13" column="0" selection-start="472" selection-end="472" vertical-scroll-proportion="0.32957748" vertical-offset="104" max-vertical-offset="459">
           <folding>
             <element signature="e#1#29#0" expanded="true" />
           </folding>
