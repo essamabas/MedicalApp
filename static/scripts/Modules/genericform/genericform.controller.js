@@ -1,29 +1,63 @@
 
 
-/** 
-* @namespace dtTableController
+/**
+* @namespace GenericFormController
 */
-function GenericFormController( $scope, GenericService) {
+function GenericFormController($scope, $stateParams, GenericService) {
 
     var vm = this;
 	// Initialize Post-Options
 	vm.PostOptions = {};
 
-	$scope.Items = [];
+	// initialize Item - to be passed in form
+	$scope.Item = {};
     $scope.ListName = "List";
 	
-    // Initialize new service
-    $scope.newItem = new GenericService();	
+	// Get Item - if id is provided
+	if($stateParams.id !== undefined) {
+		$scope.Item = GenericService.get({ id:$stateParams.id });
+	}
+	
+	// get url from GenericService
+	vm.url = function() {
+		var Url = GenericService.url.replace("api","#");
+		Url = Url.replace("?format=json","");
+		return Url;		
+	};
+	
+    // Initialize new item
     vm.addItem = function() {
-        // we can create an instance as well
-        var newItem = new GenericService();
-        newItem.$save();
+		// we can create an instance as well
+		//$scope.Item.$save(function() {
+		GenericService.save($scope.Item, function() {
+			// on success - Redirect to List
+			window.location.href = vm.url;
+		});
     };
+	
+	// Update item
+	vm.updateItem = function() {
+		// First get a note object from the factory
+		//var note = Notes.get({ id:$routeParams.id });
+		//$id = note.id;
+		// Now call update passing in the ID first then the object you are updating
+		//Notes.update({ id:$id }, note);		
+		$scope.Item.$update(function() {
+			// on success - Redirect to List
+			window.location.href = vm.url;
+    	});			
+	};
 
+	// Get item	 
+	vm.getItem = function(ItemId){
+		return GenericService.get({id:ItemId});
+	};
+	
     // Delete Item Management
     vm.deleteItem = function(ItemId){
         GenericService.delete({id:ItemId});
-        vm.reloadData();
+		// on success - Redirect to List
+        window.location.href = vm.url;
     };
 
     // Define Columns Layout - via API OPTIONS Request
@@ -36,58 +70,15 @@ function GenericFormController( $scope, GenericService) {
 				// Retrieve Post-Options
 				vm.PostOptions =  options.data.actions.POST; 
 				// Get Data
-				vm.reloadData(); 				
+				//vm.reloadData(); 				
 			}
 		});
 	};
-	
-    // Get Items-List
-    vm.reloadData = function() {
-		// Retrieve All Data
-		if(vm.PostOptions !=={}) {
-			GenericService.query().$promise.then(function(data) {
-				// if Data-Results exists
-				$scope.columnDefs = [];
-				$scope.columns = [];			
-				if(data.count>0) {
-					// Get Options
-					$scope.Items = data.results;
-					vm.ColumnsData = Object.keys($scope.Items[0]);
-					
-					for(var i=0; i< vm.ColumnsData.length; i++) {
-						// hide type -fields to be shown
-						if (vm.PostOptions[vm.ColumnsData[i]].type == "field") {
-							if(vm.ColumnsData[i] =="url") {
-								$scope.columnDefs.push({"sTitle": "Actions","aTargets":[i],
-														"bVisible":true,
-														"mData": null,
-														//"className": 'select-checkbox',
-														//"sDefaultContent": '<button><a href="'+vm.ColumnsData[i]+'">Download</a></button>',
-														"sDefaultContent": '<button type="button" class="btn btn-primary btn-circle"><i class="glyphicon glyphicon-edit"></i></button>',
-													});
-							} else {
-								$scope.columnDefs.push({"sTitle": "","aTargets":[i],
-														"bVisible":false,
-														"mData": null
-													});								
-							}
-						} else {
-							$scope.columnDefs.push({"mData": vm.ColumnsData[i],
-													"sTitle": vm.ColumnsData[i],
-													"aTargets":[i]
-												   });
-							//$scope.columns.push({"mData": vm.ColumnsData[i],"sTitle": vm.ColumnsData[i], "bSearchable": true, "bSortable": true });
-						}
-					}
-				}
-			});
-		}
-    };
-	
+
 	// Call Options
     vm.getOptions();
-	
+
 	// Link Template to Controller
-	$scope.reloadData = vm.reloadData;
+	// $scope.reloadData = vm.reloadData;
 
 }

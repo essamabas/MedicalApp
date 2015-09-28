@@ -180,17 +180,17 @@ angular
         templateUrl:BaseUrl.url+'scripts/Modules/dtTable/list.view.html',
         // prefix ^ means absolute urls
         url:'^/Patient', 
-       controller:'PatientCtrl',
+       controller:'PatientListCtrl',
         resolve: {
             loadMyLIMS:function($ocLazyLoad){
                 return $ocLazyLoad.load(
                 {
                     name:'sbAdminApp',
                     files:[
-						BaseUrl.url+'scripts/Modules/api/api.service.js',
-						BaseUrl.url+'scripts/Modules/dtTable/dtTable.directive.js',
-						BaseUrl.url+'scripts/Modules/dtTable/dtTable.controller.js',
-						BaseUrl.url+'scripts/Modules/patient/patient.js'
+                      BaseUrl.url+'scripts/Modules/api/api.service.js',
+                      BaseUrl.url+'scripts/Modules/dtTable/dtTable.directive.js',
+                      BaseUrl.url+'scripts/Modules/dtTable/dtTable.controller.js',
+                      BaseUrl.url+'scripts/Modules/patient/patient.list.js'
                     ]
                 });
             }
@@ -198,20 +198,23 @@ angular
    })
       .state('dashboard.patientview', {
           url: "^/Patient/:id/view",
-          templateUrl: BaseUrl.url+'scripts/LIMSPatients/views/patient.view.html',
-		  controller:'PatientCtrl',
-			resolve: {
-				loadMyLIMS:function($ocLazyLoad){
-					return $ocLazyLoad.load(
-					{
-						name:'sbAdminApp',
-						files:[
-							BaseUrl.url+'scripts/LIMSPatients/LIMSPatients.module.js'
-						]
-					});
-				}
-			}		
-    })
+          templateUrl: BaseUrl.url+'scripts/Modules/genericform/generic.view.html',
+          controller:'PatientFormCtrl',
+          resolve: {
+            loadMyLIMS:function($ocLazyLoad){
+              return $ocLazyLoad.load(
+              {
+                name:'sbAdminApp',
+                files:[
+                      BaseUrl.url+'scripts/Modules/api/api.service.js',
+                      BaseUrl.url+'scripts/Modules/genericform/genericView.directive.js',
+                      BaseUrl.url+'scripts/Modules/genericform/genericform.controller.js',
+                      BaseUrl.url+'scripts/Modules/patient/patient.form.js'
+                ]
+              });
+				    }
+			    }		
+      })
       .state('dashboard.patient.edit', {
           url: "^/Patient/:id/edit",
           templateUrl: BaseUrl.url+'scripts/LIMSPatients/views/patient.edit.html',

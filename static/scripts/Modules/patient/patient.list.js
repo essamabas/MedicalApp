@@ -3,8 +3,7 @@
 angular.module('sbAdminApp')
   .factory('PatientService', ['$resource','$cookies', '$http', PatientService])
   .directive('dtTable', dtTable)
-  .controller('PatientCtrl', PatientCtrl)
-    // End of PatientCtrl
+  .controller('PatientListCtrl', PatientListCtrl)
 ;
 
 
@@ -18,6 +17,6 @@ function PatientService($resource,$cookies,$http) {
 // --------------------------------------------
 // Controllers 
 // -----------
-function PatientCtrl($scope, PatientService) {
+function PatientListCtrl($scope, PatientService) {
   return dtTableController($scope, PatientService);
 }

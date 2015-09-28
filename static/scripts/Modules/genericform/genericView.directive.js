@@ -23,7 +23,7 @@ function genericView () {
 
 							// append checkbox-inline
 							var inputclass = ' form-control ng-pristine ';
-							var inputattributes = ' id="id_'+field +'" name="' + field + '" ng-model="' + field + '" + type="checkbox" ';
+							var inputattributes = ' id="id_'+field +'" name="' + field + '" ng-model="Item.' + field + '" + type="checkbox" ';
 							var div_ul = '<ul class="djng-form-control-feedback djng-field-errors" ng-show="myform.'+ field + '.$dirty"> ';
 							div_ul += 	 '  <li ng-show="myform.'+ field + '.$valid" class="valid"></li>';
 
@@ -42,7 +42,7 @@ function genericView () {
 
 							// append input-box
 							var inputclass = ' form-control ng-pristine ';
-							var inputattributes = ' id="id_'+field +'" name="' + field + '" ng-model="' + field + '" + type="text" ';
+							var inputattributes = ' id="id_'+field +'" name="' + field + '" ng-model="Item.' + field + '" + type="text" ';
 							var div_ul = '<ul class="djng-form-control-feedback djng-field-errors" ng-show="myform.'+ field + '.$dirty"> ';
 							div_ul += 	 '  <li ng-show="myform.'+ field + '.$valid" class="valid"></li>';
 

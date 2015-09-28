@@ -13,20 +13,6 @@ function dtTableController( $scope, GenericService, EditUrl, AddUrl) {
 	$scope.columns = [];
 	$scope.Items = [];
     $scope.ListName = "List";
-	
-    // Initialize new service
-    $scope.newItem = new GenericService();	
-    vm.addItem = function() {
-        // we can create an instance as well
-        var newItem = new GenericService();
-        newItem.$save();
-    };
-
-    // Delete Item Management
-    vm.deleteItem = function(ItemId){
-        GenericService.delete({id:ItemId});
-        vm.reloadData();
-    };
 
     // Define Columns Layout - via API OPTIONS Request
 	vm.getOptions = function() {
@@ -98,7 +84,7 @@ function dtTableController( $scope, GenericService, EditUrl, AddUrl) {
 				var ViewUrl = aData.url.replace("api","#");
 				ViewUrl = ViewUrl.replace("?format=json","");
 				// Default redirect to view-path
-				ViewUrl += "view/";
+				ViewUrl += "view";
 				$scope.aData = aData;
 				//OpenModalBox();
 				window.location.href = ViewUrl;
