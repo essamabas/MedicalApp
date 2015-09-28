@@ -5,6 +5,7 @@ angular.module('sbAdminApp')
   .factory('InsuranceInstituteService', InsuranceInstituteService)
   .factory('MedicalSpecialityService', MedicalSpecialityService)
   .directive('dtTable', dtTable)
+  .directive('formView', formView)
   .controller('PatientCtrl', PatientCtrl)
     // End of PatientCtrl
 ;
@@ -54,7 +55,8 @@ function _genericService($resource,$cookies,$http, URL) {
 			url =  URL.slice(0,URL.lastIndexOf("/:")+1);
 		}
 		return url; 		
-	}
+	};
+	
 	// add any methods here using prototype
 	service.options = function() {
 		var url = URL;
@@ -67,7 +69,7 @@ function _genericService($resource,$cookies,$http, URL) {
 			headers: {'Content-Type': 'application/x-www-form-urlencoded'},
 			params:{"format": "json"},
 			data: "csrfmiddlewaretoken="+$cookies.get('csrftoken')+"&_method=OPTIONS"
-		})
+		});
 	};
 	return service;  
 }
@@ -86,7 +88,7 @@ function _dataTableController( $scope, GenericService, EditUrl, AddUrl) {
 
     var vm = this;
 	// Initialize Post-Options
-	vm.PostOptions = {};
+	$scope.PostOptions = {};
 	
 	$scope.columnDefs = [];
 	$scope.columns = [];
@@ -118,7 +120,7 @@ function _dataTableController( $scope, GenericService, EditUrl, AddUrl) {
 				// Name of the List
 				$scope.ListName = options.data.name;
 				// Retrieve Post-Options
-				vm.PostOptions =  options.data.actions.POST; 
+				$scope.PostOptions =  options.data.actions.POST; 
 				// Get Data
 				vm.reloadData(); 				
 			}
@@ -128,7 +130,7 @@ function _dataTableController( $scope, GenericService, EditUrl, AddUrl) {
     // Get Items-List
     vm.reloadData = function() {
 		// Retrieve All Data
-		if(vm.PostOptions !=={}) {
+		if($scope.PostOptions !=={}) {
 			GenericService.query().$promise.then(function(data) {
 				// if Data-Results exists
 				$scope.columnDefs = [];
@@ -140,12 +142,12 @@ function _dataTableController( $scope, GenericService, EditUrl, AddUrl) {
 					
 					for(var i=0; i< vm.ColumnsData.length; i++) {
 						// hide type -fields to be shown
-						if (vm.PostOptions[vm.ColumnsData[i]].type == "field") {
+						if ($scope.PostOptions[vm.ColumnsData[i]].type == "field") {
 							if(vm.ColumnsData[i] =="url") {
 								$scope.columnDefs.push({"sTitle": "Actions","aTargets":[i],
 														"bVisible":true,
 														"mData": null,
-														"className": 'select-checkbox',
+														//"className": 'select-checkbox',
 														//"sDefaultContent": '<button><a href="'+vm.ColumnsData[i]+'">Download</a></button>',
 														"sDefaultContent": '<button type="button" class="btn btn-primary btn-circle"><i class="glyphicon glyphicon-edit"></i></button>',
 													});
@@ -169,15 +171,17 @@ function _dataTableController( $scope, GenericService, EditUrl, AddUrl) {
     vm.getOptions();
 	
 	// Link Template to Controller
-	$scope.PostOptions = vm.PostOptions;
 	$scope.reloadData = vm.reloadData;
 	// handle Table Row-Click
 	$scope.fnRowCallback = function(aData) {
 		if(aData !== undefined) {
 			if(aData.url!==undefined) {
 				var ViewUrl = aData.url.replace("api","#");
-				ViewUrl = ViewUrl.replace("?format=json","view");
-				window.location.href = ViewUrl; 
+				ViewUrl = ViewUrl.replace("?format=json","");
+				ViewUrl += "view/";
+				$scope.aData = aData;
+				OpenModalBox();
+				//window.location.href = ViewUrl; 
 				//$state.go(EditUrl);	
 			}
 		}
@@ -266,7 +270,7 @@ function dtTable () {
 // ----------------------------------------------------
 // Directives
 // ----------
-function FormViewDirective () {
+function formView () {
     return {
         restrict: 'E, A, C',
         scope: {
@@ -275,70 +279,85 @@ function FormViewDirective () {
         },
         link: function (scope, element, attrs, controller) {
 			
-			if((scope.fmData!== undefined) && (scope.fmOptions!== undefined)){
-				for (var field in scope.fmData) {
-					var data = scope.fmData['field'];
-					var div = document.createElement('div');
-					div.className = 'has-feedback form-group';
+			// Reference this element
+			vm = this;
+			// Update Form HTML
+			vm.updateForm = function() {
+				if((scope.fmData!== undefined) && (scope.fmOptions!== undefined)){
+					for (var field in scope.fmData) {
+						var data = scope.fmData['field'];
+						var div = document.createElement('div');
+						div.className = 'has-feedback form-group';
 
-					var option = scope.fmOptions[field];
-					if(option.type =="boolean") {
-						
-						// append checkbox-inline
-						var inputclass = ' form-control ng-pristine ';
-						var inputattributes = ' id="id_'+field +'" name="' + field + '" ng-model="' + field + '" + type="checkbox" ';
-						var div_ul = '<ul class="djng-form-control-feedback djng-field-errors" ng-show="myform.'+ field + '.$dirty"> ';
-						div_ul += 	 '  <li ng-show="myform.'+ field + '.$valid" class="valid"></li>';
-												
-						div.innerHTML = '<label class="checkbox-inline"> ' + option.label + ' </label>';
-						div.innerHTML += '<input ' + inputattributes +  ' class="' + inputclass + '" >';
-						div.innerHTML +=  data;
-						if(option.help_text !== undefined) {
-							// Insert help-block
-							div.innerHTML += '<span class="help-block">' + option.help_text + '</span>';	
+						var option = scope.fmOptions[field];
+						if(option.type =="boolean") {
+
+							// append checkbox-inline
+							var inputclass = ' form-control ng-pristine ';
+							var inputattributes = ' id="id_'+field +'" name="' + field + '" ng-model="' + field + '" + type="checkbox" ';
+							var div_ul = '<ul class="djng-form-control-feedback djng-field-errors" ng-show="myform.'+ field + '.$dirty"> ';
+							div_ul += 	 '  <li ng-show="myform.'+ field + '.$valid" class="valid"></li>';
+
+							div.innerHTML = '<label class="checkbox-inline"> ' + option.label + ' </label>';
+							div.innerHTML += '<input ' + inputattributes +  ' class="' + inputclass + '" >';
+							div.innerHTML +=  data;
+							if(option.help_text !== undefined) {
+								// Insert help-block
+								div.innerHTML += '<span class="help-block">' + option.help_text + '</span>';	
+							}
+							div.innerHTML += div_ul;
+							div.innerHTML += '</ul>';
+							div.innerHTML += '<ul class="djng-form-control-feedback djng-field-errors ng-hide" ng-show="myform.'+ field + '.$pristine"></ul>';
+
+						} else if(option.type =="string") {
+
+							// append input-box
+							var inputclass = ' form-control ng-pristine ';
+							var inputattributes = ' id="id_'+field +'" name="' + field + '" ng-model="' + field + '" + type="text" ';
+							var div_ul = '<ul class="djng-form-control-feedback djng-field-errors" ng-show="myform.'+ field + '.$dirty"> ';
+							div_ul += 	 '  <li ng-show="myform.'+ field + '.$valid" class="valid"></li>';
+
+							if(option.required) {
+								inputclass += ' ng-invalid ng-invalid-required ';
+								inputattributes += ' required="required" ';
+							}
+							if(option.min_length!== undefined) {
+								inputclass += ' ng-valid-minlength ';
+								inputattributes += ' minlength="' + option.min_length + '" ng-minlength="' + option.min_length + '" ';
+								div_ul += '<li ng-show="myform.'+ field + '.$error.minlength" class="invalid ng-hide">Ensure this value has at least '+ option.min_length + ' characters</li>';							
+							}
+							if(option.max_length!== undefined) {
+								inputclass += ' ng-valid-maxlength ';
+								inputattributes += ' maxlength="' + option.max_length + '" ng-maxlength="' + option.max_length + '" ';
+								div_ul += '<li ng-show="myform.'+ field + '.$error.maxlength" class="invalid ng-hide">Ensure this value has at most '+ option.max_length + ' characters</li>';							
+							}
+							// insert label/input					
+							div.innerHTML = '<label class="control-label" for="id_'+field + '" >' + option.label + ' </label>';
+							div.innerHTML += '<input ' + inputattributes +  ' class="' + inputclass + '" >';
+							div.innerHTML +=  data;
+							if(option.help_text !== undefined) {
+								// Insert help-block
+								div.innerHTML += '<span class="help-block">' + option.help_text + '</span>';	
+							}
+							// insert ul
+							div.innerHTML += div_ul;
+							div.innerHTML += '</ul>';
+							div.innerHTML += '<ul class="djng-form-control-feedback djng-field-errors ng-hide" ng-show="myform.'+ field + '.$pristine"></ul>';						
 						}
-						div.innerHTML += div_ul;
-						div.innerHTML += '</ul>';
-						div.innerHTML += '<ul class="djng-form-control-feedback djng-field-errors ng-hide" ng-show="myform.'+ field + '.$pristine"></ul>';
-					
-					} else if(option.type =="string") {
-						
-						// append input-box
-						var inputclass = ' form-control ng-pristine ';
-						var inputattributes = ' id="id_'+field +'" name="' + field + '" ng-model="' + field + '" + type="text" ';
-						var div_ul = '<ul class="djng-form-control-feedback djng-field-errors" ng-show="myform.'+ field + '.$dirty"> ';
-						div_ul += 	 '  <li ng-show="myform.'+ field + '.$valid" class="valid"></li>';
-						
-						if(option.required) {
-							inputclass += ' ng-invalid ng-invalid-required ';
-							inputattributes += ' required="required" ';
-						}
-						if(option.min_length!== undefined) {
-							inputclass += ' ng-valid-minlength ';
-							inputattributes += ' minlength="' + option.min_length + '" ng-minlength="' + option.min_length + '" ';
-							div_ul += '<li ng-show="myform.'+ field + '.$error.minlength" class="invalid ng-hide">Ensure this value has at least '+ option.min_length + ' characters</li>';							
-						}
-						if(option.max_length!== undefined) {
-							inputclass += ' ng-valid-maxlength ';
-							inputattributes += ' maxlength="' + option.max_length + '" ng-maxlength="' + option.max_length + '" ';
-							div_ul += '<li ng-show="myform.'+ field + '.$error.maxlength" class="invalid ng-hide">Ensure this value has at most '+ option.max_length + ' characters</li>';							
-						}
-						// insert label/input					
-						div.innerHTML = '<label class="control-label" for="id_'+field + '" >' + option.label + ' </label>
-						div.innerHTML += '<input ' + inputattributes +  ' class="' + inputclass + '" >';
-						div.innerHTML +=  data;
-						if(option.help_text !== undefined) {
-							// Insert help-block
-							div.innerHTML += '<span class="help-block">' + option.help_text + '</span>';	
-						}
-						// insert ul
-						div.innerHTML += div_ul;
-						div.innerHTML += '</ul>';
-						div.innerHTML += '<ul class="djng-form-control-feedback djng-field-errors ng-hide" ng-show="myform.'+ field + '.$pristine"></ul>';						
 					}
-				}
-				
-			}
+				}			
+			};
+			
+            // watch for any changes to our data, rebuild the DataTable
+            scope.$watch(attrs.fmData, function(newVal, oldVal) {
+				if (!Object.is(newVal, oldVal)) {
+                //if (newVal!==oldVal) {
+					// apply the plugin				
+					vm.updateForm();
+                }
+            });			
+			
+
 		}
 	};	
 }	
@@ -349,11 +368,18 @@ function FormViewDirective () {
 	//  Helper for open ModalBox with requested header, content and bottom
 	function OpenModalBox(header, inner, bottom){
 		var modalbox = $('#modalbox');
-		modalbox.find('.modal-header-name span').html(header);
-		modalbox.find('.devoops-modal-inner').html(inner);
-		modalbox.find('.devoops-modal-bottom').html(bottom);
+		if(header!==undefined) {
+			modalbox.find('.modal-header-name span').html(header);
+		}
+		if(inner !== undefined) {
+			modalbox.find('.devoops-modal-inner').html(inner);
+		}
+		if(bottom!== undefined) {
+			modalbox.find('.devoops-modal-bottom').html(bottom);
+		}
 		modalbox.fadeIn('fast');
-		$('body').addClass("body-expanded");
+		//$('body').addClass("body-expanded");
+		$('#modalbox').modal('toggle');
 	}
 
 	//  Close modalbox

@@ -2,21 +2,14 @@
 <div class="container-fluid">
 	
 	<!-- Modal -->
-	<div class="modal fade" id="modalbox" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+	<div class="modal fade" id="modalbox" tabindex="-1" role="dialog" aria-labelledby="ModalboxLabel" aria-hidden="true">
 		<div class="modal-dialog">
 			<div class="modal-content">
 				<div class="modal-header">
 					<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-					<h4 class="modal-title" id="myModalLabel">{{Modaltitle}}</h4>
+					<h4 class="modal-title" >{{Modaltitle}}</h4>
 				</div>
-				<div class="modal-body">
-					<form class="form-horizontal" role="form" ng-submit="addItem()">
-						<div my-genericview
-							fm-data="aData"
-							fm-options="PostOptions"
-							>
-						</div >
-					</form>					
+				<div class="modal-body"> 				
 				</div>
 				<div class="modal-footer">
 					<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
@@ -53,9 +46,7 @@
 			fn-row-callback="fnRowCallback"
 			>
 		</table>
-		
-		
-	</div>		
+	</div>
 	
 	<!-- /.row -->
 </div>
