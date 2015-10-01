@@ -7,7 +7,7 @@ function GenericFormController($scope, $stateParams, GenericService) {
 
     var vm = this;
 	// Initialize Post-Options
-	vm.PostOptions = {};
+	$scope.PostOptions = {};
 
 	// initialize Item - to be passed in form
 	$scope.Item = {};
@@ -15,7 +15,9 @@ function GenericFormController($scope, $stateParams, GenericService) {
 	
 	// Get Item - if id is provided
 	if($stateParams.id !== undefined) {
-		$scope.Item = GenericService.get({ id:$stateParams.id });
+		$scope.Item = GenericService.get({id:$stateParams.id }, function(data) {
+  			$scope.Item.data = data;
+		});
 	}
 	
 	// get url from GenericService
@@ -68,7 +70,7 @@ function GenericFormController($scope, $stateParams, GenericService) {
 				// Name of the List
 				$scope.ListName = options.data.name;
 				// Retrieve Post-Options
-				vm.PostOptions =  options.data.actions.POST; 
+				$scope.PostOptions =  options.data.actions.POST; 
 				// Get Data
 				//vm.reloadData(); 				
 			}

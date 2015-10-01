@@ -4,7 +4,7 @@ function genericView () {
         restrict: 'E, A, C',
         scope: {
             fmData: '=',
-            fmOptions: '='              
+            fmOptions: '='
         },
         link: function (scope, element, attrs, controller) {
 			
@@ -78,7 +78,15 @@ function genericView () {
 			};
 			
             // watch for any changes to our data, rebuild the DataTable
-            scope.$watch(attrs.fmData, function(newVal, oldVal) {
+            scope.$parent.$watch(attrs.fmData, function(newVal, oldVal) {
+				if (!Object.is(newVal, oldVal)) {
+                //if (newVal!==oldVal) {
+					// apply the plugin				
+					vm.updateForm();
+                }
+            });
+			
+            scope.$parent.$watch(attrs.fmOptions, function(newVal, oldVal) {
 				if (!Object.is(newVal, oldVal)) {
                 //if (newVal!==oldVal) {
 					// apply the plugin				
