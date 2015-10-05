@@ -13,8 +13,9 @@ function genericView () {
 			// Update Form HTML
 			vm.updateForm = function() {
 				if((scope.fmData!== undefined) && (scope.fmOptions!== undefined)){
+					scope.Item = {};
 					for (var field in scope.fmData) {
-						var data = scope.fmData['field'];
+						var data = scope.fmData[field];
 						var div = document.createElement('div');
 						div.className = 'has-feedback form-group';
 
@@ -22,8 +23,8 @@ function genericView () {
 						if(option.type =="boolean") {
 
 							// append checkbox-inline
-							var inputclass = ' form-control ng-pristine ';
-							var inputattributes = ' id="id_'+field +'" name="' + field + '" ng-model="Item.' + field + '" + type="checkbox" ';
+							var inputclass = " form-control ng-pristine ";
+							var inputattributes = " id='id_"+field +"' name='" + field + "' ng-model='Item." + field + "' type='checkbox' ";
 							var div_ul = '<ul class="djng-form-control-feedback djng-field-errors" ng-show="myform.'+ field + '.$dirty"> ';
 							div_ul += 	 '  <li ng-show="myform.'+ field + '.$valid" class="valid"></li>';
 
@@ -42,7 +43,8 @@ function genericView () {
 
 							// append input-box
 							var inputclass = ' form-control ng-pristine ';
-							var inputattributes = ' id="id_'+field +'" name="' + field + '" ng-model="Item.' + field + '" + type="text" ';
+							var inputattributes = " id='id_"+field +"' name='" + field + "'" + " value='" + data + "'" + " ng-model='Item." + field + "' type='text' ";
+							//scope.Item[field] = data;
 							var div_ul = '<ul class="djng-form-control-feedback djng-field-errors" ng-show="myform.'+ field + '.$dirty"> ';
 							div_ul += 	 '  <li ng-show="myform.'+ field + '.$valid" class="valid"></li>';
 
@@ -62,8 +64,8 @@ function genericView () {
 							}
 							// insert label/input					
 							div.innerHTML = '<label class="control-label" for="id_'+field + '" >' + option.label + ' </label>';
-							div.innerHTML += '<input ' + inputattributes +  ' class="' + inputclass + '" >';
-							div.innerHTML +=  data;
+							div.innerHTML += '<input ' + inputattributes +  ' class="' + inputclass + '" >';  
+							//div.innerHTML +=  data;
 							if(option.help_text !== undefined) {
 								// Insert help-block
 								div.innerHTML += '<span class="help-block">' + option.help_text + '</span>';	
@@ -73,6 +75,8 @@ function genericView () {
 							div.innerHTML += '</ul>';
 							div.innerHTML += '<ul class="djng-form-control-feedback djng-field-errors ng-hide" ng-show="myform.'+ field + '.$pristine"></ul>';						
 						}
+						// append div to element
+						element.append(div);
 					}
 				}			
 			};

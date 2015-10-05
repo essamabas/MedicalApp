@@ -15,8 +15,8 @@ function GenericFormController($scope, $stateParams, GenericService) {
 	
 	// Get Item - if id is provided
 	if($stateParams.id !== undefined) {
-		$scope.Item = GenericService.get({id:$stateParams.id }, function(data) {
-  			$scope.Item.data = data;
+		vm.Item = GenericService.get({id:$stateParams.id }, function(data) {
+  			$scope.Item = data.results[0];
 		});
 	}
 	
@@ -44,7 +44,7 @@ function GenericFormController($scope, $stateParams, GenericService) {
 		//$id = note.id;
 		// Now call update passing in the ID first then the object you are updating
 		//Notes.update({ id:$id }, note);		
-		$scope.Item.$update(function() {
+		vm.Item.$update(function() {
 			// on success - Redirect to List
 			window.location.href = vm.url;
     	});			
