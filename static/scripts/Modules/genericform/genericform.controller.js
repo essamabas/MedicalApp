@@ -28,7 +28,7 @@ function GenericFormController($scope, $stateParams, GenericService) {
 	};
 	
     // Initialize new item
-    vm.addItem = function() {
+    $scope.addItem = function() {
 		// we can create an instance as well
 		//$scope.Item.$save(function() {
 		GenericService.save($scope.Item, function() {
@@ -38,16 +38,22 @@ function GenericFormController($scope, $stateParams, GenericService) {
     };
 	
 	// Update item
-	vm.updateItem = function() {
+	$scope.updateItem = function() {
 		// First get a note object from the factory
 		//var note = Notes.get({ id:$routeParams.id });
 		//$id = note.id;
 		// Now call update passing in the ID first then the object you are updating
-		//Notes.update({ id:$id }, note);		
-		vm.Item.$update(function() {
+		//Notes.update({ id:$id }, note);
+		//var Item = GenericService.get({id:$stateParams.id });	
+		GenericService.create($scope.Item,function() {
 			// on success - Redirect to List
 			window.location.href = vm.url;
-    	});			
+		});
+		//vm.Item = GenericService.update({id:$stateParams.id },$scope.Item);
+		//vm.Item.$update(function() {
+			// on success - Redirect to List
+		//	window.location.href = vm.url;
+    	//});
 	};
 
 	// Get item	 

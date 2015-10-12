@@ -141,3 +141,4 @@ REST_FRAMEWORK = {
 
 # Default Currency Used
 DEFAULT_CURRENCY_USED = 'EGP'
+#APPEND_SLASH = False
