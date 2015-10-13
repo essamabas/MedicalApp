@@ -1,5 +1,5 @@
 
-function genericView () {
+function genericView ($compile) {
     return {
         restrict: 'E, A, C',
 		transclude: true,
@@ -24,6 +24,7 @@ function genericView () {
 				//vm.fmDataName = scope.fmData;
 				vm.fmDataName = "Item";
 				vm.fmOptions = scope.fmOptions;
+				scope[vm.fmDataName] = scope.fmData;
 				
 				if((vm.fmData!== undefined) && (scope.fmOptions!== undefined)){
 					//scope.Item = {};
@@ -111,6 +112,7 @@ function genericView () {
 								// append input-box
 								var coption = document.createElement("option");
 								coption.text = choice.display_name;
+								coption.value = choice.value;
 								if(data ==choice.value ) {
 									coption.setAttribute("selected", "");	
 								}
@@ -140,16 +142,11 @@ function genericView () {
 							// enable validation
 							element.validator();
 							//
+							//Compile DOM and apply changes to Parent-Controller
+							// Ref: https://docs.angularjs.org/api/ng/service/$compile
+							$compile(element.contents())(scope.$parent);
 						}
 					}
-					// watch - fmDataName
-					scope.$watch("fmData", function(newVal, oldVal) {
-						if (!Object.is(newVal, oldVal)) {
-						//if (newVal!==oldVal) {
-							// apply the plugin				
-							scope.$parent[attrs.fmData] = scope.fmData;
-						}						
-					});
 				}			
 			};
 			
