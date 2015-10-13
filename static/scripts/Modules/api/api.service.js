@@ -15,6 +15,7 @@ function apiService($resource,$cookies,$http, URL) {
 		return url; 		
 	};
 	
+	// source: http://stackoverflow.com/questions/23149151/jquery-and-django-rest-framework-bulk-send-list
 	service.create = function(data) {
 		var url = URL;
 		if(URL.lastIndexOf("/:")> -1) {
@@ -23,9 +24,15 @@ function apiService($resource,$cookies,$http, URL) {
 		return $http({
 			method: 'POST',
 			url: url,
+			contentType: "application/json; charset=utf-8",
+			dataType: "json",			
 			headers: {'Content-Type': 'application/x-www-form-urlencoded'},
-			params:{"format": "json"},
-			data: "csrfmiddlewaretoken="+$cookies.get('csrftoken')+"&_content="+JSON.stringify(data)
+			//params:{"format": "json"},
+			data: "csrfmiddlewaretoken=" + $cookies.get('csrftoken') + "&_content_type=application/json" + "&_content="+JSON.stringify(data),
+			//data: JSON.stringify(data),
+			beforeSend: function(xhr, settings) {
+				  xhr.setRequestHeader("X-CSRFToken", $cookies.get('csrftoken'));
+				}			
 		});
 	};
 	

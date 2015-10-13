@@ -2,21 +2,33 @@
 function genericView () {
     return {
         restrict: 'E, A, C',
+		transclude: true,
         scope: {
             fmData: '=',
             fmOptions: '='
         },
         link: function (scope, element, attrs, controller) {
-			
 			// Reference this element
 			var vm = this;
 			
+			
+			//vm.fmData = "Item";
+			//vm.fmData = scope.fmData;
+			
 			// Update Form HTML
 			vm.updateForm = function() {
-				if((scope.fmData!== undefined) && (scope.fmOptions!== undefined)){
-					scope.Item = {};
-					for (var field in scope.fmData) {
-						var data = scope.fmData[field];
+				
+				//vm.fmData = scope.$parent[scope.fmData];
+				vm.fmData = scope.fmData;
+				// name of fmData - it should be evaluated as: scope.fmData
+				//vm.fmDataName = scope.fmData;
+				vm.fmDataName = "Item";
+				vm.fmOptions = scope.fmOptions;
+				
+				if((vm.fmData!== undefined) && (scope.fmOptions!== undefined)){
+					//scope.Item = {};
+					for (var field in vm.fmData) {
+						var data = vm.fmData[field];
 						
 						var div = document.createElement('div');
 						div.className = 'form-group has-feedback';
@@ -35,7 +47,7 @@ function genericView () {
 							if(data) {
 								input.setAttribute("checked", "");	
 							}
-							input.setAttribute("ng-model", "Item." + field );
+							input.setAttribute("ng-model", vm.fmDataName + "." + field );
 							input.setAttribute("type", 'checkbox');
 							
 							// check-required field
@@ -58,7 +70,7 @@ function genericView () {
 							input.setAttribute("id", "id_"+field);
 							input.setAttribute("name", "id_"+field);
 							input.setAttribute("value", data);
-							input.setAttribute("ng-model", "Item." + field );
+							input.setAttribute("ng-model", vm.fmDataName + "." + field );
 							input.setAttribute("type", 'text');							
 							//scope.Item[field] = data;
 							
@@ -92,7 +104,7 @@ function genericView () {
 							select.setAttribute("id", "id_"+field);
 							select.setAttribute("name", "id_"+field);
 							//input.setAttribute("value", data);
-							select.setAttribute("ng-model", "Item." + field );
+							select.setAttribute("ng-model", vm.fmDataName + "." + field );
 
 							// add radio for each choice
 							option.choices.forEach(function(choice) {
@@ -126,9 +138,18 @@ function genericView () {
 							// append div to element
 							element.append(div);
 							// enable validation
-							element.validator();							
+							element.validator();
+							//
 						}
 					}
+					// watch - fmDataName
+					scope.$watch("fmData", function(newVal, oldVal) {
+						if (!Object.is(newVal, oldVal)) {
+						//if (newVal!==oldVal) {
+							// apply the plugin				
+							scope.$parent[attrs.fmData] = scope.fmData;
+						}						
+					});
 				}			
 			};
 			
