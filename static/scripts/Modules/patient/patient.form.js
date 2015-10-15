@@ -1,7 +1,7 @@
 
 
 angular.module('sbAdminApp',['ngMessages'])
-  .factory('PatientService', ['$resource','$cookies', '$http', PatientService])
+  .factory('PatientService', ['$cookies', '$http', PatientService])
     // End of PatientCtrl
   .directive('genericView', genericView)
   .controller('PatientFormCtrl', ['$scope','$stateParams', 'PatientService',PatientFormCtrl])
@@ -11,8 +11,8 @@ angular.module('sbAdminApp',['ngMessages'])
 // --------------------------------------------
 // Services 
 // -----------
-function PatientService($resource,$cookies,$http) {
-  return apiService($resource,$cookies,$http,'/api/Patient/:Id');
+function PatientService($cookies,$http) {
+  return apiService($cookies,$http,'/api/Patient/');
 }
 
 // --------------------------------------------

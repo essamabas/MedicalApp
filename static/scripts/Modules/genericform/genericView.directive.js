@@ -47,7 +47,12 @@ function genericView ($compile) {
 						} else if(option.type =="string") {
 
 							// append input-box - text
-							createInputField(div, 'input', option, ' form-control ng-pristine','text', field, data, vm.fmDataName );
+							if(option.max_length!== undefined) {
+								createInputField(div, 'input', option, ' form-control ng-pristine','text', field, data, vm.fmDataName );	
+							} else {
+								createInputField(div, 'textarea', option, ' form-control ng-pristine','text', field, data, vm.fmDataName );
+							}
+							
 							// insert ul
 							AppendFlag = true;
 
@@ -218,5 +223,5 @@ function createInputField (div, elemType, option, className, typeName, fieldName
 	if(option.help_text !== undefined) {
 		// Insert help-block
 		div.innerHTML += '<p class="help-block">' + option.help_text + '</p>';
-	}	
+	}
 };

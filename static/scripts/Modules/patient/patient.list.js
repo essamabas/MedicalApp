@@ -1,7 +1,7 @@
 
 
 angular.module('sbAdminApp')
-  .factory('PatientService', ['$resource','$cookies', '$http', PatientService])
+  .factory('PatientService', ['$cookies', '$http', PatientService])
   .directive('dtTable', dtTable)
   .controller('PatientListCtrl', PatientListCtrl)
 ;
@@ -10,8 +10,8 @@ angular.module('sbAdminApp')
 // --------------------------------------------
 // Services 
 // -----------
-function PatientService($resource,$cookies,$http) {
-  return apiService($resource,$cookies,$http,'/api/Patient/:Id');
+function PatientService($cookies,$http) {
+  return apiService($cookies,$http,'/api/Patient/');
 }
 
 // --------------------------------------------

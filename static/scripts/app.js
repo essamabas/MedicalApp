@@ -16,8 +16,7 @@ angular
     'angular-loading-bar',
     'ngCookies',
     'ipCookie','ng-token-auth',
-    'toggle-switch',
-	'ngResource'
+    'toggle-switch'
   ])
   
   .constant('BaseUrl', {
@@ -179,7 +178,7 @@ angular
       .state('dashboard.patientlist',{
         templateUrl:BaseUrl.url+'scripts/Modules/dtTable/list.view.html',
         // prefix ^ means absolute urls
-        url:'^/Patient', 
+        url:'^/Patient/', 
        controller:'PatientListCtrl',
         resolve: {
             loadMyLIMS:function($ocLazyLoad){
@@ -197,7 +196,7 @@ angular
         }        
    })
       .state('dashboard.patientview', {
-          url: "^/Patient/:id/view",
+          url: "^/Patient/:id/view/",
           templateUrl: BaseUrl.url+'scripts/Modules/genericform/generic.view.html',
           controller:'PatientFormCtrl',
           resolve: {

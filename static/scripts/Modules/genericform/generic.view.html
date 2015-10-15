@@ -10,8 +10,8 @@
 	</div>	
 	<div class="row">
 		
-		<div>Hello {{Item}}!</div>
-		<pre>myForm.insurance_id.$error = {{ myForm.insurance_id.$error | json }}</pre>
+		<!-- <div>Hello {{Item}}!</div>  -->
+		<!-- <pre>myForm.insurance_id.$error = {{ myForm.insurance_id.$error | json }}</pre>  -->
 		
 		<div ng-show="ShowpostErrors" class="alert alert-danger alert-dismissible" role="alert">
 		  <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
@@ -19,16 +19,23 @@
 		</div>
 		
 		<form name="myForm" id="myForm" class="form-horizontal" role="form" ng-submit="updateItem()">
-			<div generic-view
-				fm-data="Item"
-				fm-options="PostOptions"
-				>
-			</div >
+			<fieldset ng-disabled="!enableEdit">
+				<div generic-view
+					fm-data="Item"
+					fm-options="PostOptions"
+					>
+				</div>
+			</fieldset>	
 			<div class="form-group">
-			  <div class="col-md-10">
-				<input type="submit" class="btn btn-primary" value="Save" ng-disabled="myForm.$invalid"/>
-			  </div>
-			</div>			
+				<div class="col-md-10">
+					<input type="button" class="btn btn-info" value="Back to List" ng-click="BackToList()">
+					<input type="button" class="btn btn-info" value="Edit" ng-click="enableEditFn()">
+					<input type="submit" class="btn btn-primary" value="Save" ng-disabled="myForm.$invalid || !myForm.$dirty"/>
+				</div>
+				<div class="col-md-2">
+					<input type="button" class="btn btn-danger" value="Delete" ng-click="deleteItem()">
+				</div>
+			</div>		
 		</form>
 
 	</div>		

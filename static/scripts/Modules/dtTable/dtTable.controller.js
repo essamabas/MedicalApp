@@ -33,8 +33,9 @@ function dtTableController( $scope, GenericService, EditUrl, AddUrl) {
     vm.reloadData = function() {
 		// Retrieve All Data
 		if(vm.PostOptions !=={}) {
-			GenericService.query().$promise.then(function(data) {
+			GenericService.query().then(function(request) {
 				// if Data-Results exists
+				var data = request.data; 
 				$scope.columnDefs = [];
 				$scope.columns = [];			
 				if(data.count>0) {
@@ -84,7 +85,7 @@ function dtTableController( $scope, GenericService, EditUrl, AddUrl) {
 				var ViewUrl = aData.url.replace("api","#");
 				ViewUrl = ViewUrl.replace("?format=json","");
 				// Default redirect to view-path
-				ViewUrl += "view";
+				ViewUrl += "view/";
 				$scope.aData = aData;
 				//OpenModalBox();
 				window.location.href = ViewUrl;
