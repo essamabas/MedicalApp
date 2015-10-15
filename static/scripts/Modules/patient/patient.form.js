@@ -1,6 +1,6 @@
 
 
-angular.module('sbAdminApp')
+angular.module('sbAdminApp',['ngMessages'])
   .factory('PatientService', ['$resource','$cookies', '$http', PatientService])
     // End of PatientCtrl
   .directive('genericView', genericView)

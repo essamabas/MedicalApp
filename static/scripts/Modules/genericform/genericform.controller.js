@@ -8,6 +8,9 @@ function GenericFormController($scope, $stateParams, GenericService) {
     var vm = this;
 	// Initialize Post-Options
 	$scope.PostOptions = {};
+	$scope.ShowpostErrors = false;
+	$scope.postErrors = "";
+	
 
 	// initialize Item - to be passed in form
 	$scope.Item = {};
@@ -44,11 +47,27 @@ function GenericFormController($scope, $stateParams, GenericService) {
 		//$id = note.id;
 		// Now call update passing in the ID first then the object you are updating
 		//Notes.update({ id:$id }, note);
-		//var Item = GenericService.get({id:$stateParams.id });	
-		GenericService.create($scope.Item,function() {
-			// on success - Redirect to List
+		$scope.postErrors = "";
+		$scope.ShowpostErrors = false;
+		GenericService.create($scope.Item)
+			.then(function successCallback(response) {
+			// this callback will be called asynchronously
+			// when the response is available
+			alert("Success");
 			window.location.href = vm.url;
-		});
+		  }, function errorCallback(response) {
+			// called asynchronously if an error occurs
+			// or server returns response with an error status.
+			alert("Error");
+			// add radio for each choice
+			$scope.ShowpostErrors = true;
+			$scope.postErrors = JSON.stringify(response.data);
+			//for (var key in response.data) {
+			//	$scope.myForm[key].$error = {postError: JSON.stringify(response.data[key]) };
+			//}
+			
+			//$scope.Item.Message = JSON.stringify()
+		  });		
 		//vm.Item = GenericService.update({id:$stateParams.id },$scope.Item);
 		//vm.Item.$update(function() {
 			// on success - Redirect to List

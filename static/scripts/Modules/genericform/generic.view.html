@@ -11,8 +11,14 @@
 	<div class="row">
 		
 		<div>Hello {{Item}}!</div>
+		<pre>myForm.insurance_id.$error = {{ myForm.insurance_id.$error | json }}</pre>
 		
-		<form id="myForm" class="form-horizontal" role="form" ng-submit="updateItem()">
+		<div ng-show="ShowpostErrors" class="alert alert-danger alert-dismissible" role="alert">
+		  <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+		  <strong>Post-Errors!</strong> {{postErrors}}
+		</div>
+		
+		<form name="myForm" id="myForm" class="form-horizontal" role="form" ng-submit="updateItem()">
 			<div generic-view
 				fm-data="Item"
 				fm-options="PostOptions"
@@ -20,10 +26,11 @@
 			</div >
 			<div class="form-group">
 			  <div class="col-md-10">
-				<input type="submit" class="btn btn-primary" value="Save"/>
+				<input type="submit" class="btn btn-primary" value="Save" ng-disabled="myForm.$invalid"/>
 			  </div>
 			</div>			
-		</form>			
+		</form>
+
 	</div>		
 	
 	<!-- /.row -->

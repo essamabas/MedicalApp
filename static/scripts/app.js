@@ -211,7 +211,8 @@ angular
                       BaseUrl.url+'scripts/Modules/genericform/genericView.directive.js',
                       BaseUrl.url+'scripts/Modules/genericform/genericform.controller.js',
                       BaseUrl.url+'scripts/Modules/patient/patient.form.js',
-					            'http://1000hz.github.io/bootstrap-validator/dist/validator.js'
+					  'http://1000hz.github.io/bootstrap-validator/dist/validator.js',
+					  'https://docs.angularjs.org/angular-messages.js'
                 ]
               });
 				    }
