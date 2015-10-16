@@ -92,5 +92,12 @@ function dtTableController( $scope, GenericService, EditUrl, AddUrl) {
 				//$state.go(EditUrl);	
 			}
 		}
-	};	
+	};
+	
+	$scope.addItem = function() {
+		// Navigate to add Page 
+		var ViewUrl = GenericService.url().replace("api","#");
+		ViewUrl = ViewUrl.replace("?format=json","");		
+		window.location.href = ViewUrl + "add/";
+	};
 }

@@ -19,13 +19,6 @@
 		</div>
 		
 		<form name="myForm" id="myForm" class="form-horizontal" role="form" ng-submit="updateItem()">
-			<fieldset ng-disabled="!enableEdit">
-				<div generic-view
-					fm-data="Item"
-					fm-options="PostOptions"
-					>
-				</div>
-			</fieldset>	
 			<div class="form-group">
 				<div class="col-md-10">
 					<input type="button" class="btn btn-info" value="Back to List" ng-click="BackToList()">
@@ -35,7 +28,14 @@
 				<div class="col-md-2">
 					<input type="button" class="btn btn-danger" value="Delete" ng-click="deleteItem()">
 				</div>
-			</div>		
+			</div>				
+			<fieldset ng-disabled="!enableEdit">
+				<div generic-view
+					fm-data="Item"
+					fm-options="PostOptions"
+					>
+				</div>
+			</fieldset>		
 		</form>
 
 	</div>		

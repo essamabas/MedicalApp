@@ -206,26 +206,36 @@ angular
                 name:'sbAdminApp',
                 files:[
 					  BaseUrl.url+'scripts/Modules/genericform/genericform.style.css',
+					  BaseUrl.url+'bower_components/angular-messages/angular-messages.min.js',
                       BaseUrl.url+'scripts/Modules/api/api.service.js',
                       BaseUrl.url+'scripts/Modules/genericform/genericView.directive.js',
                       BaseUrl.url+'scripts/Modules/genericform/genericform.controller.js',
                       BaseUrl.url+'scripts/Modules/patient/patient.form.js',
-					  'http://1000hz.github.io/bootstrap-validator/dist/validator.js',
-					  'https://docs.angularjs.org/angular-messages.js'
                 ]
               });
 				    }
 			    }		
       })
-      .state('dashboard.patient.edit', {
-          url: "^/Patient/:id/edit",
-          templateUrl: BaseUrl.url+'scripts/LIMSPatients/views/patient.edit.html',
-          controller: 'PatientCtrl'
-    })
-      .state('dashboard.patient.add', {
-          url: "^/Patient/:id/add",
-          templateUrl: BaseUrl.url+'scripts/LIMSPatients/views/patient.add.html',
-          controller: 'PatientCtrl'
-    })       
+      .state('dashboard.patientadd', {
+          url: "^/Patient/add/",
+          templateUrl: BaseUrl.url+'scripts/Modules/genericform/generic.view.html',
+          controller:'PatientFormCtrl',
+          resolve: {
+            loadMyLIMS:function($ocLazyLoad){
+              return $ocLazyLoad.load(
+              {
+                name:'sbAdminApp',
+                files:[
+					  BaseUrl.url+'scripts/Modules/genericform/genericform.style.css',
+					  BaseUrl.url+'bower_components/angular-messages/angular-messages.min.js',
+                      BaseUrl.url+'scripts/Modules/api/api.service.js',
+                      BaseUrl.url+'scripts/Modules/genericform/genericView.directive.js',
+                      BaseUrl.url+'scripts/Modules/genericform/genericform.controller.js',
+                      BaseUrl.url+'scripts/Modules/patient/patient.form.js',
+                ]
+              });
+			}
+		}
+      })
 ;
   }]);

@@ -29,8 +29,8 @@ function genericView ($compile) {
 				if((vm.fmData!== undefined) && (scope.fmOptions!== undefined)){
 					//scope.Item = {};
 					for (var field in vm.fmData) {
+
 						var data = vm.fmData[field];
-						
 						var div = document.createElement('div');
 						div.className = 'form-group has-feedback';
 						
@@ -67,13 +67,11 @@ function genericView ($compile) {
 						}
 						
 						if(AppendFlag) {
-
 							// help-block with-errors
 							//div.innerHTML += '<div class="help-block with-errors"></div>';
-							
+
 							//div.innerHTML +=  data;
 
-							
 							// append div to element
 							element.append(div);
 							// enable validation
@@ -87,14 +85,14 @@ function genericView ($compile) {
 				}			
 			};
 			
-            // watch for any changes to our data, rebuild the DataTable
+            /* watch for any changes to our data, rebuild the DataTable
             scope.$parent.$watch(attrs.fmData, function(newVal, oldVal) {
 				if (!Object.is(newVal, oldVal)) {
                 //if (newVal!==oldVal) {
 					// apply the plugin				
 					vm.updateForm();
                 }
-            });
+            }); */
 			
             scope.$parent.$watch(attrs.fmOptions, function(newVal, oldVal) {
 				if (!Object.is(newVal, oldVal)) {
@@ -217,9 +215,32 @@ function createInputField (div, elemType, option, className, typeName, fieldName
 			// insert label/input
 			div.innerHTML += '<div class="checkbox"> <label class="control-label" >' + (input.outerHTML) + ' '
 			 + option.label + ' </label> </div>';
+		
+	} else if(option.type =="date") {
+		
+		// append input-box - date
+		var input = document.createElement(elemType);
+		input.className = className;
+		// set attributes
+		input.setAttribute("id", "myForm."+fieldName);
+		input.setAttribute("name", fieldName);
+		input.setAttribute("value", data);
+		input.setAttribute("ng-model", ngItemName + "." + fieldName );
+		input.setAttribute("type", typeName);							
+		//scope.Item[fieldName] = data;
+		
+		// Append Input-Validation
+		var errMessageDiv = document.createElement('div');
+		//errMessageDiv.className = 'help-block with-errors';
+		InsertNgValidation(option, fieldName, errMessageDiv, input);
+
+		// insert label/input						
+		div.innerHTML = '<label class="control-label" for="myForm.'+fieldName + '" >' + option.label + ' </label>';
+		div.innerHTML +=(input.outerHTML);
+		div.innerHTML +=(errMessageDiv.outerHTML);		
 	}
 	
-	
+	// Append help_text
 	if(option.help_text !== undefined) {
 		// Insert help-block
 		div.innerHTML += '<p class="help-block">' + option.help_text + '</p>';

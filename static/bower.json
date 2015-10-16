@@ -9,6 +9,7 @@
     "angular-cookies": "~1.4.5",
     "angular-datatables": "latest",
     "angular-loading-bar": "~0.7.0",
+    "angular-messages": "~1.4.7",
     "angular-resource": "~1.4.5",
     "angular-route": "~1.4.5",
     "angular-sanitize": "1.2.16",
