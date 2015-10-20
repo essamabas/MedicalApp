@@ -28,60 +28,29 @@ function genericView ($compile) {
 				
 				if((vm.fmData!== undefined) && (scope.fmOptions!== undefined)){
 					//scope.Item = {};
+					var AppendFlag = false;
 					for (var field in vm.fmData) {
 
 						var data = vm.fmData[field];
-						var div = document.createElement('div');
-						div.className = 'form-group has-feedback';
-						
-						var AppendFlag = false;
-						
 						var option = scope.fmOptions[field];
-						if(option.type =="boolean") {
-							
-							// append input-box - checkbox
-							createInputField(div, 'input', option, ' ','checkbox', field, data, vm.fmDataName );
-							AppendFlag = true;
-
-							
-						} else if(option.type =="string") {
-
-							// append input-box - text
-							if(option.max_length!== undefined) {
-								createInputField(div, 'input', option, ' form-control ng-pristine','text', field, data, vm.fmDataName );	
-							} else {
-								createInputField(div, 'textarea', option, ' form-control ng-pristine','text', field, data, vm.fmDataName );
+						
+						// Create Input-Fields
+						AppendFlag = createInputField (element, option, field, data, vm.fmDataName);
+						// parse data if - date option is passed
+						if(option.type == 'date') {
+							if(!isNaN(Date.parse(data))) {
+								vm.fmData[field] = new Date(data);
 							}
-							
-							// insert ul
-							AppendFlag = true;
-
-						} else if((option.type =="choice") || 
-							((option.type =="field") && (option.choices!== undefined) )) {
-							
-							// append select box
-							createInputField(div, 'select', option, ' form-control','', field, data, vm.fmDataName );
-
-							AppendFlag = true;
-							
 						}
 						
+						// Append to element - if input created
 						if(AppendFlag) {
-							// help-block with-errors
-							//div.innerHTML += '<div class="help-block with-errors"></div>';
-
-							//div.innerHTML +=  data;
-
-							// append div to element
-							element.append(div);
-							// enable validation
-							//element.validator();
-							//
 							//Compile DOM and apply changes to Parent-Controller
 							// Ref: https://docs.angularjs.org/api/ng/service/$compile
 							$compile(element.contents())(scope.$parent);
-						}
+						}						
 					}
+					
 				}			
 			};
 			
@@ -97,11 +66,10 @@ function genericView ($compile) {
             scope.$parent.$watch(attrs.fmOptions, function(newVal, oldVal) {
 				if (!Object.is(newVal, oldVal)) {
                 //if (newVal!==oldVal) {
-					// apply the plugin				
+					// apply the plugin
 					vm.updateForm();
                 }
-            });			
-			
+            });
 
 		}
 	};	
@@ -137,10 +105,24 @@ function  InsertNgValidation(option, fieldName, errMessageDiv, input) {
 
 // Wrap INPUT-ANGULAR 1.x - Forms Validation Here
 //createInputField(div, option, 'text', field, data, vm.fmDataName );
-function createInputField (div, elemType, option, className, typeName, fieldName, data, ngItemName) {
+function createInputField (element, option, fieldName, data, ngItemName) {
+	
+	var AppendFlag = false;
+	// Create div-Element to append input
+	var div = document.createElement('div');
+	div.className = 'form-group has-feedback';	
 	
 	if(option.type =="string") {
+
+		var elemType = 'input';
+		var className = ' form-control ng-pristine ';
+		var typeName = 'text';
 		
+		// append input-box - text
+		if(option.max_length == undefined) {
+			elemType = 'textarea';
+		}
+
 		// append input-box - text
 		var input = document.createElement(elemType);
 		input.className = className;
@@ -160,11 +142,18 @@ function createInputField (div, elemType, option, className, typeName, fieldName
 		// insert label/input						
 		div.innerHTML = '<label class="control-label" for="myForm.'+fieldName + '" >' + option.label + ' </label>';
 		div.innerHTML +=(input.outerHTML);
-		div.innerHTML +=(errMessageDiv.outerHTML);		
+		div.innerHTML +=(errMessageDiv.outerHTML);
+		
+		AppendFlag = true;
 		
 	} else if((option.type =="choice") || 
 			((option.type =="field") && (option.choices!== undefined) )) {
 	
+			// select Item
+			var elemType = 'select';
+			var className = ' form-control ';
+			var typeName = '';
+		
 			var select = document.createElement(elemType);
 			select.className = className;
 			// set attributes
@@ -188,12 +177,18 @@ function createInputField (div, elemType, option, className, typeName, fieldName
 			// insert Options
 			div.innerHTML += '<label class="control-label" for="myForm.'+fieldName + '" >' + option.label + ' </label>';							
 			div.innerHTML +=(select.outerHTML);
+		
+			AppendFlag = true;
 	
 	// input-boolean 
 	} else if(option.type =="boolean") {
-							
+
+			var elemType = 'input';
+			var className = ' ';
+			var typeName = 'checkbox';
+		
 			// append input-box
-			var input = document.createElement('input');
+			var input = document.createElement(elemType);
 			//input.className = ' form-control ng-pristine ';
 			// set attributes
 			input.setAttribute("id", "myForm."+fieldName);
@@ -216,19 +211,31 @@ function createInputField (div, elemType, option, className, typeName, fieldName
 			div.innerHTML += '<div class="checkbox"> <label class="control-label" >' + (input.outerHTML) + ' '
 			 + option.label + ' </label> </div>';
 		
+			AppendFlag = true;
+		
 	} else if(option.type =="date") {
 		
+		// Check if Valid Date passed
+		var elemType = 'input';
+		var className = ' form-control ng-pristine ';
+		var typeName = 'date';
+
 		// append input-box - date
 		var input = document.createElement(elemType);
 		input.className = className;
 		// set attributes
 		input.setAttribute("id", "myForm."+fieldName);
 		input.setAttribute("name", fieldName);
-		input.setAttribute("value", data);
+		if(!isNaN(Date.parse(data))) {
+			data = new Date(data);
+			input.setAttribute("value", data);
+		}
 		input.setAttribute("ng-model", ngItemName + "." + fieldName );
-		input.setAttribute("type", typeName);							
+		input.setAttribute("type", typeName);
+		//
+		input.setAttribute("placeholder", "yyyy-MM-dd");
 		//scope.Item[fieldName] = data;
-		
+
 		// Append Input-Validation
 		var errMessageDiv = document.createElement('div');
 		//errMessageDiv.className = 'help-block with-errors';
@@ -237,12 +244,25 @@ function createInputField (div, elemType, option, className, typeName, fieldName
 		// insert label/input						
 		div.innerHTML = '<label class="control-label" for="myForm.'+fieldName + '" >' + option.label + ' </label>';
 		div.innerHTML +=(input.outerHTML);
-		div.innerHTML +=(errMessageDiv.outerHTML);		
+		div.innerHTML +=(errMessageDiv.outerHTML);
+
+		AppendFlag = true;
+		
+
 	}
 	
-	// Append help_text
-	if(option.help_text !== undefined) {
-		// Insert help-block
-		div.innerHTML += '<p class="help-block">' + option.help_text + '</p>';
+	// Append to element - if input created
+	if(AppendFlag) {
+		// Append help_text
+		if(option.help_text !== undefined) {
+			// Insert help-block
+			div.innerHTML += '<p class="help-block">' + option.help_text + '</p>';
+		}		
+		// append div to element
+		element.append(div);
 	}
+	
+	// return Flag to indicate element is inserted
+	return AppendFlag;
+
 };

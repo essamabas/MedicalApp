@@ -26,7 +26,7 @@ function GenericFormController($scope, $stateParams, GenericService) {
 		//vm.Item = GenericService.get({id:$stateParams.id }, function(data) {
   		//	$scope.Item = data.results[0];
 		//});
-		vm.Item = GenericService.retrieve($stateParams.id)
+		GenericService.retrieve($stateParams.id)
 			.then(function successCallback(response) {
 			// this callback will be called asynchronously when the response is available
 			console.log("Item retrieved successfully - response: " + JSON.stringify(response));
@@ -69,7 +69,10 @@ function GenericFormController($scope, $stateParams, GenericService) {
 		// Empty PostErrors messages 
 		$scope.postErrors = "";
 		$scope.ShowpostErrors = false;
-		GenericService.update($scope.Item.url, $scope.Item)
+		// create local data-copy
+		vm.Item = jQuery.extend(true, {}, $scope.Item);
+		vm.PreparePost(vm.Item, $scope.PostOptions);
+		GenericService.update($scope.Item.url, vm.Item)
 			.then(function successCallback(response) {
 			// this callback will be called asynchronously when the response is available
 			console.log("Item is updated successfully - response: " + JSON.stringify(response));
@@ -90,7 +93,10 @@ function GenericFormController($scope, $stateParams, GenericService) {
 		// Empty PostErrors messages 
 		$scope.postErrors = "";
 		$scope.ShowpostErrors = false;
-		GenericService.create($scope.Item)
+		// create a copy of Item-Data
+		vm.Item = jQuery.extend(true, {}, $scope.Item);
+		vm.PreparePost(vm.Item, $scope.PostOptions);
+		GenericService.create(vm.Item)
 			.then(function successCallback(response) {
 			// this callback will be called asynchronously when the response is available
 			console.log("Item is added successfully - response: " + JSON.stringify(response));
@@ -188,6 +194,26 @@ function GenericFormController($scope, $stateParams, GenericService) {
 		}
 	};	
 
+	// function should be called before posting data - in order to avoid errors between django-rest/ 
+	vm.PreparePost =function(Item, options){
+		//
+		for (var field in Item) {
+			// $scope.PostOptions
+			var data = Item[field];
+			var option = options[field];
+			// convert date to string YYYY-MM-DD
+			if(option.type == 'date') {
+				if(data instanceof Date){
+					// convert to string
+					Item[field] = moment(data).format('YYYY-MM-DD');
+				}
+			}
+		}
+
+
+		
+	};
+		
 	// Call Options
     vm.getOptions();
 

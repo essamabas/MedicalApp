@@ -165,12 +165,12 @@ angular
       .state('auth.login',{
         controller:'AuthCtrl',        
         templateUrl:BaseUrl.url+'views/pages/login.html',
-        url:'/login'
+        url:'^/login/'
     })   
       .state('auth.register',{
        controller:'AuthCtrl',
        templateUrl:BaseUrl.url+'views/pages/register.html',
-       url:'/register'
+       url:'^/register/'
    })
    //-----------------------------------------------------
    // Patient Paths
@@ -205,12 +205,13 @@ angular
               {
                 name:'sbAdminApp',
                 files:[
-					  BaseUrl.url+'scripts/Modules/genericform/genericform.style.css',
-					  BaseUrl.url+'bower_components/angular-messages/angular-messages.min.js',
-                      BaseUrl.url+'scripts/Modules/api/api.service.js',
-                      BaseUrl.url+'scripts/Modules/genericform/genericView.directive.js',
-                      BaseUrl.url+'scripts/Modules/genericform/genericform.controller.js',
-                      BaseUrl.url+'scripts/Modules/patient/patient.form.js',
+					BaseUrl.url+'scripts/Modules/genericform/genericform.style.css',
+					BaseUrl.url+'bower_components/angular-messages/angular-messages.min.js',
+					BaseUrl.url+'bower_components/moment/moment.js',
+					BaseUrl.url+'scripts/Modules/api/api.service.js',
+					BaseUrl.url+'scripts/Modules/genericform/genericform.controller.js',
+					BaseUrl.url+'scripts/Modules/genericform/genericView.directive.js',
+					BaseUrl.url+'scripts/Modules/patient/patient.form.js',
                 ]
               });
 				    }
@@ -228,9 +229,10 @@ angular
                 files:[
 					  BaseUrl.url+'scripts/Modules/genericform/genericform.style.css',
 					  BaseUrl.url+'bower_components/angular-messages/angular-messages.min.js',
+					  BaseUrl.url+'bower_components/moment/moment.js',
                       BaseUrl.url+'scripts/Modules/api/api.service.js',
+                      BaseUrl.url+'scripts/Modules/genericform/genericform.controller.js',					
                       BaseUrl.url+'scripts/Modules/genericform/genericView.directive.js',
-                      BaseUrl.url+'scripts/Modules/genericform/genericform.controller.js',
                       BaseUrl.url+'scripts/Modules/patient/patient.form.js',
                 ]
               });
