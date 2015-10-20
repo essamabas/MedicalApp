@@ -18,6 +18,7 @@ class Patient(models.Model):
     created_on = models.DateTimeField(_("created on"), auto_now_add=True)
     updated_on = models.DateTimeField(_("updated on"), auto_now=True)	
     user = models.OneToOneField(User, primary_key=True)
+    #user = models.ForeignKey(User, unique=True)
     death_date = models.DateField(_("death date"),
                                   help_text="Death Date of the Patient",
                                   null=True, blank=True)
