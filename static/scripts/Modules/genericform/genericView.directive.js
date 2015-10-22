@@ -173,6 +173,11 @@ function createInputField (element, option, fieldName, data, ngItemName) {
 				}
 				select.add(coption);														
 			});
+		
+			// Append Input-Validation
+			var errMessageDiv = document.createElement('div');
+			//errMessageDiv.className = 'help-block with-errors';
+			InsertNgValidation(option, fieldName, errMessageDiv, select);		
 
 			// insert Options
 			div.innerHTML += '<label class="control-label" for="myForm.'+fieldName + '" >' + option.label + ' </label>';							

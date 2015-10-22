@@ -4,6 +4,12 @@ from django.db import models
 from django.contrib.auth.models import User
 from django.utils.translation import ugettext_lazy as _
 from .InsuranceInstitute import *
+from django.core.validators import RegexValidator
+
+#
+class ZipCodeValidator(RegexValidator):
+    regex = r'^[0-9]{5}$'
+    message = 'Invalid ZipCode.'
 
 # Create your models here.
 class Patient(models.Model):
@@ -13,12 +19,15 @@ class Patient(models.Model):
         verbose_name_plural = _('patients')
 
     # Persoanl Info.
+	#Ref: how to use with django-rest: http://stackoverflow.com/questions/24409048/how-to-upload-file-with-django-rest-api
+    profile_picture = models.FileField(null=True, blank=True, default='')
     first_name = models.CharField(_("first name"), max_length=255, blank=False)
     last_name = models.CharField(_("last name"), max_length=255, blank=False)
     created_on = models.DateTimeField(_("created on"), auto_now_add=True)
     updated_on = models.DateTimeField(_("updated on"), auto_now=True)	
-    user = models.OneToOneField(User, primary_key=True)
-    #user = models.ForeignKey(User, unique=True)
+    #user = models.OneToOneField(User, primary_key=True)
+    user = models.ForeignKey(User, help_text="assign to login User-Name", unique=True)
+    zipcode = models.CharField(max_length=5, blank=True, validators=[ZipCodeValidator()])
     death_date = models.DateField(_("death date"),
                                   help_text="Death Date of the Patient",
                                   null=True, blank=True)

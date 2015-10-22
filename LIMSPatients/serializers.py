@@ -9,14 +9,11 @@ class InsuranceInstituteSerializer(serializers.HyperlinkedModelSerializer):
 class PatientSerializer(serializers.HyperlinkedModelSerializer):
     #full_name = serializers.Field('full_name')
     #full_name = serializers.Field(source='Patient.full_name')
-    #user = serializers.HyperlinkedRelatedField(
-    #        many=False,
-    #        read_only=True,
-    #        view_name='user-detail'
-    #    )    
+
     age = serializers.SerializerMethodField()
     class Meta:
         model = Patient
+        extra_kwargs = {'user': {'write_only': True}}
 
     def get_age(self, obj):
             return str(obj.age)
