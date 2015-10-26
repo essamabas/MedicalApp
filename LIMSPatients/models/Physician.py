@@ -6,6 +6,8 @@ from django.contrib.auth.models import User
 from django.utils.translation import ugettext_lazy as _
 from .MedicalSpeciality import *
 
+from rest_framework import serializers
+
 # Create your models here.
 class Physician(models.Model):
 	# Persoanl Info.
@@ -21,3 +23,10 @@ class Physician(models.Model):
     class Meta(object):
         verbose_name = _('physician')
         verbose_name_plural = _('physicians')
+
+# -----------------------
+#	Serialization Class
+# -----------------------
+class PhysicianSerializer(serializers.HyperlinkedModelSerializer):
+    class Meta:
+        model = Physician

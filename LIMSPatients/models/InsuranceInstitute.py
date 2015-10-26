@@ -3,6 +3,8 @@ from django.db import models
 from django.contrib.auth.models import User
 from django.utils.translation import ugettext_lazy as _
 
+from rest_framework import serializers
+
 
 # Create your models here.
 class InsuranceInstitute(models.Model):
@@ -30,3 +32,10 @@ class InsuranceInstitute(models.Model):
 
     def __unicode__(self):
         return self.name
+
+# -----------------------
+#Serialization Class
+# -----------------------
+class InsuranceInstituteSerializer(serializers.HyperlinkedModelSerializer):
+    class Meta:
+        model = InsuranceInstitute

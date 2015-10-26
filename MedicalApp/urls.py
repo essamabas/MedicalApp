@@ -35,6 +35,7 @@ router.register(r'Patient', PatientViewSet)
 router.register(r'Physician', PhysicianViewSet)
 router.register(r'MedicalSpeciality', MedicalSpecialityViewSet)
 router.register(r'users', UserViewSet)
+router.register(r'LabTest', LabTestViewSet)
 
 from django.http import HttpRequest
 from django.template import RequestContext

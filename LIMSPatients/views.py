@@ -5,7 +5,6 @@ from rest_framework import viewsets
 from rest_framework.authentication import SessionAuthentication, BasicAuthentication
 from rest_framework.permissions import IsAuthenticated, AllowAny
 
-from LIMSPatients.serializers import *
 from LIMSPatients.models import *
 
 class InsuranceInstituteViewSet(viewsets.ModelViewSet):
@@ -26,4 +25,9 @@ class PhysicianViewSet(viewsets.ModelViewSet):
 class MedicalSpecialityViewSet(viewsets.ModelViewSet):
     queryset = MedicalSpeciality.objects.all()
     serializer_class = MedicalSpecialitySerializer
+    permission_classes = (IsAuthenticated,)
+	
+class LabTestViewSet(viewsets.ModelViewSet):
+    queryset = LabTest.objects.all()
+    serializer_class = LabTestSerializer
     permission_classes = (IsAuthenticated,)

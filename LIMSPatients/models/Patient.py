@@ -6,7 +6,11 @@ from django.utils.translation import ugettext_lazy as _
 from .InsuranceInstitute import *
 from django.core.validators import RegexValidator
 
-#
+from rest_framework import serializers
+
+# -----------------------
+#	Model Classes
+# -----------------------
 class ZipCodeValidator(RegexValidator):
     regex = r'^[0-9]{5}$'
     message = 'Invalid ZipCode.'
@@ -63,3 +67,18 @@ class Patient(models.Model):
     # Insurance Info.
     insurance_institue = models.ForeignKey(InsuranceInstitute)
     insurance_id = models.CharField(_("insurance_id"),max_length=255, unique=True, blank=False)
+
+# -----------------------
+#	Serialization Classes
+# -----------------------
+class PatientSerializer(serializers.HyperlinkedModelSerializer):
+    #full_name = serializers.Field('full_name')
+    #full_name = serializers.Field(source='Patient.full_name')
+
+    age = serializers.SerializerMethodField()
+    class Meta:
+        model = Patient
+        extra_kwargs = {'user': {'write_only': True}}
+
+    def get_age(self, obj):
+            return str(obj.age)
