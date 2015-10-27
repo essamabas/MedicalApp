@@ -7,6 +7,8 @@ from .InsuranceInstitute import *
 from django.core.validators import RegexValidator
 
 from rest_framework import serializers
+from simple_history.models import HistoricalRecords
+#from workflows.models import Workflow, State, Transition
 
 # -----------------------
 #	Model Classes
@@ -52,6 +54,7 @@ class Patient(models.Model):
     marital_status = models.CharField(_("marital_status"),max_length=10, choices=MARTIAL_CHOICES)
     active = models.BooleanField(default=True,
                                  help_text="Flag to indicate that the patient is active. - it can be compared with last activity date, such as: updated_on/death_date/..")
+    history = HistoricalRecords()
 
     def _get_age(self):
         today = datetime.now()
@@ -71,14 +74,19 @@ class Patient(models.Model):
 # -----------------------
 #	Serialization Classes
 # -----------------------
+from django import core
 class PatientSerializer(serializers.HyperlinkedModelSerializer):
     #full_name = serializers.Field('full_name')
     #full_name = serializers.Field(source='Patient.full_name')
 
     age = serializers.SerializerMethodField()
+    history = serializers.SerializerMethodField()
+
     class Meta:
         model = Patient
-        extra_kwargs = {'user': {'write_only': True}}
 
     def get_age(self, obj):
-            return str(obj.age)
+        return str(obj.age)
+	
+    def get_history(self, obj):
+        return core.serializers.serialize("json", obj.history.all())
