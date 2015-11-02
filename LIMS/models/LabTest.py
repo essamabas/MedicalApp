@@ -5,8 +5,8 @@ from django.utils.translation import ugettext_lazy as _
 from django.core.validators import MinValueValidator
 
 from rest_framework import serializers
-from .Patient import *
-from .Physician import *
+from General.models.Patient import *
+from General.models.Physician import *
 
 # -----------------------
 #	Model Classes

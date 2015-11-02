@@ -3,5 +3,4 @@
 from .Patient import *
 from .InsuranceInstitute import *
 from .MedicalSpeciality import *
-from .Physician import *
-from .LabTest import *
+from .Appointment import *

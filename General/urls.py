@@ -3,7 +3,7 @@
 from django.conf.urls import patterns, url, include
 from rest_framework import routers
 #from api import views as api_views
-from LIMSPatients import views
+from General import views
 
 # ----------------
 # API Routes
