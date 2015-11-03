@@ -42,7 +42,7 @@ INSTALLED_APPS = (
     'simple_history',
 	# Apps
     'Authentication',
-    'General',	
+    'General',
 	'LIMS',
 )
 

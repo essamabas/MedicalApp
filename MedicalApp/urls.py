@@ -16,7 +16,6 @@ Including another URLconf
 from django.conf.urls import include, url
 from django.contrib import admin
 
-
 # ----------------
 # APPs Urls
 # ----------------
@@ -26,15 +25,19 @@ from django.contrib import admin
 # ----------------
 from rest_framework import routers
 #from api import views as api_views
-from authentication.views import *
-from LIMSPatients.views import *
+from Authentication.views import *
+from General.views import *
+from LIMS.views import *
 
 router = routers.DefaultRouter()
+# Authentication API
+router.register(r'users', UserViewSet)
+# General API
 router.register(r'InsuranceInstitute', InsuranceInstituteViewSet)
 router.register(r'Patient', PatientViewSet)
 router.register(r'Physician', PhysicianViewSet)
 router.register(r'MedicalSpeciality', MedicalSpecialityViewSet)
-router.register(r'users', UserViewSet)
+# LIMS API
 router.register(r'LabTest', LabTestViewSet)
 
 from django.http import HttpRequest
@@ -56,7 +59,7 @@ urlpatterns = [
     url(r'^$', 'MedicalApp.urls.home', name='home'),
     url(r'^admin/', include(admin.site.urls)),
     url(r'^api/', include(router.urls)),
-    url(r'^api/auth/sign_in$',
-        AuthView.as_view(),
-        name='Sign In')
+    #url(r'^api/auth/sign_in$',
+    #    AuthView.as_view(),
+    #    name='Sign In')
 ]

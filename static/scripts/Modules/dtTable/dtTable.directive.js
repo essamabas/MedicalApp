@@ -1,5 +1,13 @@
 
 
+angular.module('sbAdminApp')
+  .directive('dtTable', dtTable)
+;
+
+// ------------------------
+// Directives
+// ------------------------
+
 function dtTable () {
     return {
         restrict: 'E, A, C',

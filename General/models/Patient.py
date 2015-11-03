@@ -68,8 +68,8 @@ class Patient(models.Model):
     full_name = property(_get_full_name)
 
     # Insurance Info.
-    insurance_institue = models.ForeignKey(InsuranceInstitute)
-    insurance_id = models.CharField(_("insurance_id"),max_length=255, unique=True, blank=False)
+    insurance_institue = models.ForeignKey(InsuranceInstitute, null=True, blank=True, default = None)
+    insurance_id = models.CharField(_("insurance_id"),max_length=255, unique=True, blank=True)
 
 # -----------------------
 #	Serialization Classes

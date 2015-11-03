@@ -19,10 +19,6 @@ TEST_CHOICES = (
     ('Neutral', 'Neutral'),
 )
 
-class Lab(models.Model):
-    patient= models.ManyToManyField('Patient')
-    lab_test= models.ManyToManyField('LabTest')
-
 class TestUnit(models.Model):
     unit = models.CharField(_("unit"), max_length=252, blank=False, unique=True)
     code = models.CharField(_("code"), null=True, blank=True, max_length=255, unique=True, help_text="Code Name for the Test Unit")
@@ -66,9 +62,9 @@ class LabTest(models.Model):
     # Reference to self - LabTest may include sub-Tests
     sub_tests= models.ManyToManyField('self', blank=True)
 
-    patient= models.ManyToManyField('Patient', blank=False)
-    pathologist= models.ManyToManyField('Physician', blank=True, help_text="Pathologists who performed the test",related_name="pathologist")
-    requestor= models.ManyToManyField('Physician', blank = False, help_text="Doctor who requested the test",related_name="requestor")
+    patient= models.ManyToManyField(Patient, blank=False)
+    pathologist= models.ManyToManyField(Physician, blank=True, help_text="Pathologists who performed the test",related_name="pathologist")
+    requestor= models.ManyToManyField(Physician, blank = False, help_text="Doctor who requested the test",related_name="requestor")
     date_requested = models.DateTimeField(_("date_requested"), blank = True, help_text="The Date on which the test is requested")
     date_analysis = models.DateTimeField(_("date_analysis"), blank = True, help_text="Date of the Analysis")
     # diagnosis comment for the test

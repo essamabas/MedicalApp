@@ -1,4 +1,11 @@
+// Inject into the Main App
+angular.module('sbAdminApp')
+.directive('genericView', genericView)
+;
 
+// --------------------------------------------
+// Directives 
+// -----------
 function genericView ($compile) {
     return {
         restrict: 'E, A, C',
@@ -10,8 +17,7 @@ function genericView ($compile) {
         link: function (scope, element, attrs, controller) {
 			// Reference this element
 			var vm = this;
-			
-			
+
 			//vm.fmData = "Item";
 			//vm.fmData = scope.fmData;
 			

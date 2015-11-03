@@ -1,9 +1,13 @@
 
 
+angular.module('sbAdminApp')
+  .controller('dtTableController', ['$scope','GenericService',dtTableController])
+;
+
 /** 
 * @namespace dtTableController
 */
-function dtTableController( $scope, GenericService, EditUrl, AddUrl) {
+function dtTableController( $scope, GenericService) {
 
     var vm = this;
 	// Initialize Post-Options

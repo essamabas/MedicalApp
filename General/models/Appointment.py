@@ -1,7 +1,7 @@
 
 from django.db import models
 from django.utils.translation import ugettext_lazy as _
-from General.models import Patient
+from .models import Patient
 
 URGENCY_CHOICES = (
     ('Low', 'Low'),

@@ -3,10 +3,9 @@
 angular.module('sbAdminApp',['ngMessages'])
   .factory('PatientService', ['$cookies', '$http', PatientService])
     // End of PatientCtrl
-  .directive('genericView', genericView)
+  //.directive('genericView', genericView)
   .controller('PatientFormCtrl', ['$scope','$stateParams', 'PatientService',PatientFormCtrl])
 ;
-
 
 // --------------------------------------------
 // Services 
