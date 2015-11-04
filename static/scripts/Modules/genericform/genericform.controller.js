@@ -1,5 +1,9 @@
 
 
+angular.module('sbAdminApp')
+  .controller('GenericFormController', ['$scope','$stateParams','GenericService',GenericFormController])
+;
+
 /**
 * @namespace GenericFormController
 */
@@ -16,10 +20,12 @@ function GenericFormController($scope, $stateParams, GenericService) {
 	$scope.enableEdit = false;
 	$scope.enableEditFn = function() {
 		$scope.enableEdit = true;
+		$scope.ListName = $scope.ListName.replace("View","Edit");
+		$scope.ListName = $scope.ListName.replace("Add","Edit");
 	};
 	// initialize Item - to be passed in form
 	$scope.Item = {};
-    $scope.ListName = "List";
+    $scope.ListName = "";
 	
 	// Get Item - if id is provided
 	if($stateParams.id !== undefined) {
@@ -170,7 +176,7 @@ function GenericFormController($scope, $stateParams, GenericService) {
 		GenericService.options().then(function(options) {
 			if(options.data!== undefined) {
 				// Name of the List
-				$scope.ListName = options.data.name.replace("List","");
+				$scope.ListName = options.data.name.replace("List","") + " View";
 				// Retrieve Post-Options
 				$scope.PostOptions =  options.data.actions.POST; 
 				// Get Data

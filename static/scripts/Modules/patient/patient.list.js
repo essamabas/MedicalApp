@@ -6,10 +6,12 @@ angular.module('sbAdminApp',[{
 		BaseUrl.url+'scripts/Modules/dtTable/dtTable.directive.js',
 		BaseUrl.url+'scripts/Modules/dtTable/dtTable.controller.js',
 		BaseUrl.url+'scripts/Modules/patient/patient.list.js'
-		]}]
+		],
+	cache: true
+	}]
 )
   .factory('PatientService', ['$cookies', '$http', PatientService])
-  .directive('dtTable', dtTable)
+  //.directive('dtTable', dtTable)
   .controller('PatientListCtrl', ['$scope','PatientService', PatientListCtrl])
 ;
 

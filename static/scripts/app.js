@@ -186,9 +186,6 @@ angular
                 {
                     name:'sbAdminApp',
                     files:[
-                      BaseUrl.url+'scripts/Modules/api/api.service.js',
-                      BaseUrl.url+'scripts/Modules/dtTable/dtTable.directive.js',
-                      BaseUrl.url+'scripts/Modules/dtTable/dtTable.controller.js',
                       BaseUrl.url+'scripts/Modules/patient/patient.list.js'
                     ]
                 });
@@ -205,13 +202,7 @@ angular
               {
                 name:'sbAdminApp',
                 files:[
-					BaseUrl.url+'scripts/Modules/genericform/genericform.style.css',
-					BaseUrl.url+'bower_components/angular-messages/angular-messages.min.js',
-					BaseUrl.url+'bower_components/moment/moment.js',
-					BaseUrl.url+'scripts/Modules/api/api.service.js',
-					BaseUrl.url+'scripts/Modules/genericform/genericform.controller.js',
-					BaseUrl.url+'scripts/Modules/genericform/genericView.directive.js',
-					BaseUrl.url+'scripts/Modules/patient/patient.form.js',
+					BaseUrl.url+'scripts/Modules/patient/patient.form.js'
                 ]
               });
 				    }
@@ -227,13 +218,7 @@ angular
               {
                 name:'sbAdminApp',
                 files:[
-					  BaseUrl.url+'scripts/Modules/genericform/genericform.style.css',
-					  BaseUrl.url+'bower_components/angular-messages/angular-messages.min.js',
-					  BaseUrl.url+'bower_components/moment/moment.js',
-                      BaseUrl.url+'scripts/Modules/api/api.service.js',
-                      BaseUrl.url+'scripts/Modules/genericform/genericform.controller.js',					
-                      BaseUrl.url+'scripts/Modules/genericform/genericView.directive.js',
-                      BaseUrl.url+'scripts/Modules/patient/patient.form.js',
+                      BaseUrl.url+'scripts/Modules/patient/patient.form.js'
                 ]
               });
 			}
