@@ -1,0 +1,22 @@
+
+  <!-- Ref: https://docs.angularjs.org/api/ngMessages  -->
+  <div class="form-group has-feedback ng-scope">
+    <label class="control-label" for="myForm.{{opts.name}}">
+      <span ng-bind="opts.labeltext"></span>
+      <input 
+          class="form-control ng-valid-maxlength ng-touched ng-dirty ng-valid-parse ng-invalid ng-invalid-required"            
+          type="{{opts.type}}" name="{{opts.name}}" 
+          ng-model="opts.value"
+          ng-disabled="opts.disabled"
+          placeholder="{{opts.placeholder}}" 
+          ng-maxlength="{{opts.maxLength}}" required/>
+    </label>
+    <div ng-messages="myForm.{{opts.name}}.$error" role="alert" class="ng-inactive">
+      <!-- ngMessage: required -->
+      <div ng-repeat="errorMessage in errorMessages">
+        <!-- use ng-message-exp for a message whose key is given by an expression -->
+        <div ng-message-exp="errorMessage.type">{{ errorMessage.text }}</div>
+      </div>
+        <!-- ngMessage: maxlength -->
+    </div>
+  </div>

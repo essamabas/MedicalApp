@@ -112,9 +112,10 @@ function apiService($cookies,$http, URL) {
 			url =  URL.slice(0,URL.lastIndexOf("/:")+1);
 		} 
 		return $http({
-			method: 'POST',
+			method: 'OPTIONS',
 			url: url,
 			headers: {'Content-Type': 'application/x-www-form-urlencoded'},
+			//headers: {'Content-Type': 'application/json'},
 			params:{"format": "json"},
 			data: "csrfmiddlewaretoken="+$cookies.get('csrftoken')+"&_method=OPTIONS"
 		});
