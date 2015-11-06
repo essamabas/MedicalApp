@@ -35,6 +35,7 @@ router.register(r'users', UserViewSet)
 # General API
 router.register(r'InsuranceInstitute', InsuranceInstituteViewSet)
 router.register(r'Patient', PatientViewSet)
+router.register(r'PatientProfile', PatientProfileViewSet)
 router.register(r'Physician', PhysicianViewSet)
 router.register(r'MedicalSpeciality', MedicalSpecialityViewSet)
 # LIMS API

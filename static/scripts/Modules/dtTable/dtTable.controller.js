@@ -37,9 +37,9 @@ function dtTableController( $scope, GenericService) {
     vm.reloadData = function() {
 		// Retrieve All Data
 		if(vm.PostOptions !=={}) {
-			GenericService.query().then(function(request) {
+			GenericService.query().then(function(response) {
 				// if Data-Results exists
-				var data = request.data; 
+				var data = response.data; 
 				$scope.columnDefs = [];
 				$scope.columns = [];			
 				if(data.count>0) {

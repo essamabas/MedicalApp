@@ -3,7 +3,7 @@ from django.shortcuts import render
 # Create your views here.
 from rest_framework import viewsets
 from rest_framework.authentication import SessionAuthentication, BasicAuthentication
-from rest_framework.permissions import IsAuthenticated, AllowAny
+from rest_framework.permissions import IsAuthenticated, AllowAny, DjangoModelPermissions 
 
 from .models import *
 
@@ -16,6 +16,25 @@ class PatientViewSet(viewsets.ModelViewSet):
     queryset = Patient.objects.all()
     serializer_class = PatientSerializer
     permission_classes = (IsAuthenticated,)
+
+class PatientProfileViewSet(viewsets.ModelViewSet):
+    """This view is limited for Patient Profiles of the currently authenticated user"""
+    queryset = Patient.objects.all()
+    serializer_class = PatientSerializer
+    permission_classes = (DjangoModelPermissions,)
+
+    def get_queryset(self):
+        """return a list of all the Patients for the currently authenticated user."""
+        if self.request.user != None:
+        	print self.request.user
+        	user = self.request.user
+        	return Patient.objects.filter(user=user)
+        return Null
+
+    #def retrieve(self, request, pk=None):
+    #    """return retrieve only the Patient for the currently authenticated user."""
+    #    user = self.request.user
+    #    return Patient.objects.filter(user=user)
 
 class PhysicianViewSet(viewsets.ModelViewSet):
     queryset = Physician.objects.all()

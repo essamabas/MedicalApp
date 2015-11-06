@@ -90,3 +90,4 @@ class PatientSerializer(serializers.HyperlinkedModelSerializer):
 	
     def get_history(self, obj):
         return core.serializers.serialize("json", obj.history.all())
+

@@ -221,8 +221,24 @@ angular
                       BaseUrl.url+'scripts/Modules/patient/patient.form.js'
                 ]
               });
-			}
-		}
-      })
+						}
+					}
+			})
+      .state('dashboard.patientprofile', {
+          url: "^/Profile/",
+          templateUrl: BaseUrl.url+'scripts/Modules/profile/profile.view.html',
+          controller:'PatientProfileFormCtrl',
+          resolve: {
+            loadMyLIMS:function($ocLazyLoad){
+              return $ocLazyLoad.load(
+              {
+                name:'sbAdminApp',
+                files:[
+									BaseUrl.url+'scripts/Modules/patient/profile.form.js'
+                ]
+              });
+						}
+					}
+			})
 ;
   }]);
