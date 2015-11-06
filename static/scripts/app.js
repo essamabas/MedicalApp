@@ -234,7 +234,7 @@ angular
               {
                 name:'sbAdminApp',
                 files:[
-									BaseUrl.url+'scripts/Modules/patient/profile.form.js'
+									BaseUrl.url+'scripts/Modules/profile/profile.form.js'
                 ]
               });
 						}

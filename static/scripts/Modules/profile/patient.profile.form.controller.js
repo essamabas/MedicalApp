@@ -1,4 +1,6 @@
 
+
+
 BaseUrl = {url: '/static/'};
 angular.module('sbAdminApp',['ngMessages',{
 	files:[
@@ -11,20 +13,13 @@ angular.module('sbAdminApp',['ngMessages',{
   .factory('PatientProfileService', ['$cookies', '$http', PatientProfileService])
     // End of PatientCtrl
   //.directive('genericView', genericView)
-  .controller('PatientProfileFormCtrl', ['$scope', 'PatientProfileService',PatientProfileFormCtrl])
+  .controller('PatientProfileFormCtrl', ['$scope','$stateParams', 'PatientProfileService',PatientProfileFormCtrl])
 ;
-
-// --------------------------------------------
-// Services 
-// -----------
-function PatientProfileService($cookies,$http) {
-  return apiService($cookies,$http,'/api/PatientProfile/');
-}
 
 // --------------------------------------------
 // Controllers 
 // -----------
-function PatientProfileFormCtrl($scope, PatientProfileService) {
+function PatientProfileFormCtrl($scope, $stateParams, PatientProfileService) {
 
     var vm = this;
 	// Initialize Post-Options

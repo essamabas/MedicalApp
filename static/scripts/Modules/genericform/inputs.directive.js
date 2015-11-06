@@ -1,6 +1,11 @@
    
 // Inject into the Main App
-angular.module('sbAdminApp',['ngMessages'])
+angular.module('sbAdminApp',['ngMessages',{
+  files:[
+    BaseUrl.url+'bower_components/angular-messages/angular-messages.min.js'
+  ],
+  cache: true
+	}])
   .directive('formInput', ['$compile','BaseUrl',formInput])
   //.directive('formSelect', formSelect)
 ;
