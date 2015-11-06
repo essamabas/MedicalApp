@@ -1,8 +1,8 @@
 
-BaseUrl = {url: '/static/'};
+var BaseUrl = {url: '/static/'};
 angular.module('sbAdminApp',['ngMessages',{
 	files:[
-		BaseUrl.url+'bower_components/angular-messages/angular-messages.min.js',
+		BaseUrl.url+'bower_components/moment/moment.js',		
 		BaseUrl.url+'scripts/Modules/api/api.service.js',
 		BaseUrl.url+'scripts/Modules/genericform/inputs.directive.js'
 		],
@@ -11,7 +11,7 @@ angular.module('sbAdminApp',['ngMessages',{
   .factory('PatientProfileService', ['$cookies', '$http', PatientProfileService])
     // End of PatientCtrl
   //.directive('genericView', genericView)
-  .controller('PatientProfileFormCtrl', ['$scope', 'PatientProfileService',PatientProfileFormCtrl])
+  .controller('ProfileCtrl', ['$scope', 'PatientProfileService',ProfileCtrl])
 ;
 
 // --------------------------------------------
@@ -24,7 +24,7 @@ function PatientProfileService($cookies,$http) {
 // --------------------------------------------
 // Controllers 
 // -----------
-function PatientProfileFormCtrl($scope, PatientProfileService) {
+function ProfileCtrl($scope, PatientProfileService) {
 
     var vm = this;
 	// Initialize Post-Options
@@ -42,7 +42,6 @@ function PatientProfileFormCtrl($scope, PatientProfileService) {
 
 	// initialize Item - to be passed in form
 	$scope.Item = {};
-  $scope.ViewName = "";
 	
 	// get url from PatientProfileService
 	vm.url = function() {
@@ -70,7 +69,7 @@ function PatientProfileFormCtrl($scope, PatientProfileService) {
 				// this callback will be called asynchronously when the response is available
 				console.log("Item is updated successfully - response: " + JSON.stringify(response));
 				bootbox.alert("Item is updated successfully!", function() {
-					window.location.href = vm.url();
+					//window.location.href = vm.url();
 				});
 		  }, function errorCallback(response) {
 				// called asynchronously if an error occurs or server returns response with an error status.
@@ -81,10 +80,6 @@ function PatientProfileFormCtrl($scope, PatientProfileService) {
 		  });		
 	};
 
-	// Get item	 
-	vm.getItem = function(ItemId){
-		return PatientProfileService.get({id:ItemId});
-	};
 	
 	// Delete Item Management
 	vm.deleteItem = function() {
@@ -95,7 +90,7 @@ function PatientProfileFormCtrl($scope, PatientProfileService) {
 			// this callback will be called asynchronously when the response is available
 			console.log("Item is deleted successfully - response: " + JSON.stringify(response));
 			bootbox.alert("Item is deleted successfully!", function() {
-				window.location.href = vm.url();
+				//window.location.href = vm.url();
 			});
 		}, function errorCallback(response) {
 			// called asynchronously if an error occurs or server returns response with an error status.
@@ -107,29 +102,18 @@ function PatientProfileFormCtrl($scope, PatientProfileService) {
 	};
 	
     // Delete Item Model-Function
-  $scope.deleteItem = function(){
-		if($scope.Item.url == "") {
-			//Add Page - just discard the changes and navigate to List-Page
-			bootbox.confirm("You are about to discard the changes - Are you Sure?", function(result) {
-				if(result == true) {
-					// Navigate to List-Page
-					window.location.href = vm.url();
-				}
-			});					
-			
-		} else {
-			// Delete Item
-			bootbox.confirm("You are about to delete this Item from database - Are you Sure?", function(result) {
-				//Example.show("Confirm result: "+result);
-				if(result == true) {
-					// Delete Item from DB
-					vm.deleteItem();
-				}
-			});			
-		}
-  };
+	$scope.deleteItem = function(){
+		// Delete Item
+		bootbox.confirm("You are about to delete this Item from database - Are you Sure?", function(result) {
+			//Example.show("Confirm result: "+result);
+			if(result == true) {
+				// Delete Item from DB
+				vm.deleteItem();
+			}
+		});
+	};
 
-  // Get Model POST OPTIONS to be used in Validating FormData
+  	// Get Model POST OPTIONS to be used in Validating FormData
 	vm.getOptions = function() {
 		// Define Columns Layout
 		PatientProfileService.options().then(function(options) {
@@ -139,7 +123,7 @@ function PatientProfileFormCtrl($scope, PatientProfileService) {
 				vm.PostOptions =  options.data.actions.POST;
 				// Get Data
 				vm.getItem();
-				$scope.PostOptions =  vm.PostOptions;
+				$scope.Item =  vm.PostOptions;
 			}
 		});
 	};
@@ -158,6 +142,8 @@ function PatientProfileFormCtrl($scope, PatientProfileService) {
 					for(var i=0; i< vm.ItemFields.length; i++) {
 						// Append Data value to Options
 						vm.PostOptions[vm.ItemFields[i]].value = vm.Item[vm.ItemFields[i]];
+						vm.PostOptions[vm.ItemFields[i]].placeholder = "";
+						vm.PostOptions[vm.ItemFields[i]].type = "text";
 					}
 				}
 			}, function errorCallback(response) {

@@ -2,7 +2,8 @@
 // Inject into the Main App
 angular.module('sbAdminApp',['ngMessages',{
   files:[
-    BaseUrl.url+'bower_components/angular-messages/angular-messages.min.js'
+    BaseUrl.url+'bower_components/angular-messages/angular-messages.min.js',
+		BaseUrl.url+'bower_components/moment/moment.js'    
   ],
   cache: true
 	}])
@@ -15,8 +16,9 @@ angular.module('sbAdminApp',['ngMessages',{
 // -----------
 function formInput ($compile,BaseUrl) {
   return {
-    templateUrl: BaseUrl.url+'scripts/Modules/genericform/formInput.html',
+    //templateUrl: BaseUrl.url+'scripts/Modules/genericform/formInput.html',
     restrict: 'E',
+    scope: {},
     link: function(scope, element, attrs) {
       scope.opts = attrs;
       //Compile element - could be scope.$parent
@@ -29,6 +31,7 @@ function formSelect ($compile,BaseUrl) {
   return {
     templateUrl: BaseUrl.url+'scripts/Modules/genericform/formSelect.html',
     restrict: 'E',
+    scope: {},    
     link: function(scope, element, attrs) {
       scope.opts = attrs;
       //Compile element - could be scope.$parent

@@ -25,18 +25,18 @@
 					<input type="submit" class="btn btn-primary" value="Save" ng-disabled="myForm.$invalid || !myForm.$dirty"/>
 				</div>
 				<div class="col-md-2">
-					<input type="button" class="btn btn-danger" value="Delete" ng-click="deleteItem()">
+					<input type="button" class="btn btn-danger" value="Delete" ng-click="deleteItem()"/>
 				</div>
 			</div>
-			<fieldset ng-disabled="!enableEdit">
-				
-				<img ng-src="{{Item.profile_picture}}" class="img-responsive" alt="Profile Picture" />
-				
-				    <form-input 
-							type="text" max-length="{{Item.first_name.max_length}}"
-							min-length="{{Item.first_name.min_length}}"
-							labeltext="{{Item.first_name.label}}"
-							name="{{Item.first_name.label}}" value="{{Item.first_name.value}}"></form-input>
+			<fieldset ng-disabled="!enableEdit">				
+				<!-- <img ng-src="{{Item.profile_picture}}" class="img-responsive" alt="Profile Picture" />   -->
+				<form-input 
+						type="text" max-length="{{Item.first_name.max_length}}"
+						min-length="{{Item.first_name.min_length}}"
+						labeltext="{{Item.first_name.label}}"
+						placeholder = "{{Item.first_name.label}}"
+						name="{{Item.first_name.label}}" value="{{Item.first_name.value}}">
+				</form-input>
 			</fieldset>		
 		</form>
 

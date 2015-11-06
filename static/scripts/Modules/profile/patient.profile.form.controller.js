@@ -4,22 +4,18 @@
 BaseUrl = {url: '/static/'};
 angular.module('sbAdminApp',['ngMessages',{
 	files:[
-		BaseUrl.url+'bower_components/angular-messages/angular-messages.min.js',
-		BaseUrl.url+'scripts/Modules/api/api.service.js',
-		BaseUrl.url+'scripts/Modules/genericform/inputs.directive.js'
+		BaseUrl.url+'bower_components/angular-messages/angular-messages.min.js'
 		],
 	cache: true
 	}])
-  .factory('PatientProfileService', ['$cookies', '$http', PatientProfileService])
     // End of PatientCtrl
-  //.directive('genericView', genericView)
-  .controller('PatientProfileFormCtrl', ['$scope','$stateParams', 'PatientProfileService',PatientProfileFormCtrl])
+  .controller('_ProfileCtrl', ['$scope','PatientProfileService',_ProfileCtrl])
 ;
 
 // --------------------------------------------
 // Controllers 
 // -----------
-function PatientProfileFormCtrl($scope, $stateParams, PatientProfileService) {
+function _ProfileCtrl($scope, PatientProfileService) {
 
     var vm = this;
 	// Initialize Post-Options
@@ -76,10 +72,6 @@ function PatientProfileFormCtrl($scope, $stateParams, PatientProfileService) {
 		  });		
 	};
 
-	// Get item	 
-	vm.getItem = function(ItemId){
-		return PatientProfileService.get({id:ItemId});
-	};
 	
 	// Delete Item Management
 	vm.deleteItem = function() {

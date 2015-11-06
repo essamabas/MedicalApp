@@ -224,12 +224,12 @@ angular
 						}
 					}
 			})
-      .state('dashboard.patientprofile', {
+      .state('dashboard.profile', {
           url: "^/Profile/",
           templateUrl: BaseUrl.url+'scripts/Modules/profile/profile.view.html',
-          controller:'PatientProfileFormCtrl',
+          controller:'ProfileCtrl',
           resolve: {
-            loadMyLIMS:function($ocLazyLoad){
+            loadMyFile:function($ocLazyLoad){
               return $ocLazyLoad.load(
               {
                 name:'sbAdminApp',
