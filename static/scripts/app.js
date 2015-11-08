@@ -244,10 +244,16 @@ angular
 			})
       .state('dashboard.profile', {
           url: "^/Profile/",
-          templateUrl: BaseUrl.url+'scripts/Modules/profile/profile.view.html',
-          controller:'ProfileCtrl',
+          views: {
+            "": {
+              controller: 'ProfileCtrl', // This view will use AppCtrl loaded below in the resolve
+              templateUrl: BaseUrl.url+'scripts/Modules/profile/profile.view.html',
+            }
+          },
+          //templateUrl: BaseUrl.url+'scripts/Modules/profile/profile.view.html',
+          //controller:'ProfileCtrl',
           resolve: {
-            loadMyFile:function($ocLazyLoad){
+            loadMyCtrl:function($ocLazyLoad){
               return $ocLazyLoad.load(
               {
                 name:'sbAdminApp',
@@ -257,6 +263,6 @@ angular
               });
 						}
 					}
-			})
+			})     
 ;
   }]);
