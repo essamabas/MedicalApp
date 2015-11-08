@@ -17,7 +17,11 @@ class PatientViewSet(viewsets.ModelViewSet):
     serializer_class = PatientSerializer
     permission_classes = (DjangoModelPermissions,)
 
-class PatientProfileViewSet(PatientViewSet):
+class PatientProfileViewSet(viewsets.ModelViewSet):
+    queryset = Patient.objects.all()
+    serializer_class = PatientProfileSerializer
+    permission_classes = (DjangoModelPermissions,)
+    
     """This view is limited for Patient Profiles of the currently authenticated user"""
     def get_queryset(self):
         """return a list of all the Patients for the currently authenticated user."""

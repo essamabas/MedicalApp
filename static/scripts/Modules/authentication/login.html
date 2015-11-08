@@ -1,0 +1,50 @@
+
+<!-- modal -->
+<div class="modal show" tabindex="-1" role="dialog" aria-hidden="true">
+  <div class="modal-dialog">
+  <div class="modal-content">
+      <div class="modal-header">
+          <h1 class="text-center">Login</h1>
+      </div>
+      <div class="modal-body">
+          <form class="form col-md-12 center-block" ng-submit="handleLoginBtnClick(loginForm)" role="form" ng-init="loginForm = {}">
+            <div class="form-group">
+              <input type="text" class="form-control input-lg" placeholder="Username" ng-model="loginForm.username" required="required">
+            </div>
+            <div class="form-group">
+              <input type="password" class="form-control input-lg" placeholder="Password" ng-model="loginForm.password" required="required">
+            </div>
+            <div class="form-group">
+              
+              <div class="row">
+                  <div class="col-xs-8">
+                    <div class="checkbox">
+                        <label>
+                            <input type="checkbox" value="">Remember Me
+                        </label>
+                    </div>
+                  </div>
+                  <!-- /.col -->
+                  <div class="col-md-12">
+                    <button type="submit" class="btn btn-lg btn-primary btn-block">Sign In</button>
+                  </div>
+                  <!-- /.col -->
+                </div>              
+            </div>
+          </form>   
+      </div>
+      
+      <div class="modal-footer">
+          <div class="col-md-12">
+            <a ui-sref="auth.register" class="btn btn-lg btn-success btn-block">Register</a>
+            <!-- <button class="btn" data-dismiss="modal" aria-hidden="true">Cancel</button>  -->
+            <div style="text-align:center">
+            <p> or you can sign in via your social network</p>
+                <button class="btn btn-primary" type="submit" style="background-color:#5193ea"><i class="fa fa-facebook"></i> Facebook</button>
+                <button class="btn btn-primary" type="submit" style="background-color:#44ccfe"><i class="fa fa-twitter"></i> Twitter</button>
+            </div>            
+		      </div>
+      </div>
+  </div>
+  </div>
+</div>

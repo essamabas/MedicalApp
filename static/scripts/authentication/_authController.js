@@ -20,8 +20,8 @@ angular.module('sbAdminApp',['ipCookie','ng-token-auth'])
       accountUpdatePath:       '/auth',
       accountDeletePath:       '/auth',
       confirmationSuccessUrl:  window.location.href,
-      passwordResetPath:       '/auth/password/reset',
-      passwordUpdatePath:      '/auth/password/update',
+      passwordResetPath:       '/auth/password',
+      passwordUpdatePath:      '/auth/password',
       passwordResetSuccessUrl: window.location.href,
       emailSignInPath:         '/auth/sign_in',
       storage:                 'cookies',
@@ -65,29 +65,7 @@ angular.module('sbAdminApp',['ipCookie','ng-token-auth'])
           // handle errors
         });
     };
-
-    // Update Password Form (email)
-    $scope.handleUpdatePasswordBtnClick = function() {
-      $auth.updatePassword($scope.updatePasswordForm)
-        .then(function(resp) {
-          // handle success response
-        })
-        .catch(function(resp) {
-          // handle error response
-        });
-    };
     
-    // Password Reset Form (email)
-    $scope.handlePwdResetBtnClick = function() {
-      $auth.requestPasswordReset($scope.pwdResetForm)
-        .then(function(resp) {
-          // handle success response
-        })
-        .catch(function(resp) {
-          // handle error response
-        });
-    };
-        
     // Register Form (Email, Password, RepeatedPassword)
     $scope.handleRegBtnClick = function(registrationForm) {
       $auth.submitRegistration(registrationForm)

@@ -37,18 +37,17 @@ angular
       events:true,
     });
 
-
-
-    //$urlRouterProvider.otherwise('/login');
-    //$urlRouterProvider.when("", "login");
+    //$urlRouterProvider.otherwise('/login/');
+    $urlRouterProvider.when("", "/login/");
     //$urlRouterProvider.when("/", "/dashboard/home");
     //    
     //$urlRouterProvider.otherwise('auth/login');
-	//$urlRouterProvider.otherwise('/Patient');
+	  //$urlRouterProvider.otherwise('/Patient');
 
     $stateProvider
       .state('dashboard', {
         url:'/dashboard',
+        abstract: true,
         templateUrl: BaseUrl.url+'views/dashboard/main.html',
         resolve: {
             loadMyDirectives:function($ocLazyLoad){
@@ -84,6 +83,7 @@ angular
           }
         }
       })
+    /*
       .state('dashboard.form',{
         templateUrl:BaseUrl.url+'views/form.html',
         url:'/form'
@@ -91,7 +91,7 @@ angular
       .state('dashboard.blank',{
         templateUrl:BaseUrl.url+'views/pages/blank.html',
         url:'/blank'
-    })
+    }) 
       .state('dashboard.chart',{
         templateUrl:BaseUrl.url+'views/chart.html',
         url:'/chart',
@@ -144,34 +144,52 @@ angular
        templateUrl:BaseUrl.url+'views/pages/starter.html',
        url:'/starter'
    })
+   */
    //-----------------------------------------------------
    // Authentication Paths
    // --------------------
       .state('auth', {
         url:'/auth',
-        template:'<div><div ui-view></div></div>',        
+        template:'<div><div ui-view></div></div>',
         resolve: {
-            loadMyAuth:function($ocLazyLoad){
-                return $ocLazyLoad.load(
-                {
-                    name:'sbAdminApp',
-                    files:[
-                    BaseUrl.url+'scripts/authentication/authController.js'
-                    ]
-                });
-            }
+          loadMyAuth:function($ocLazyLoad){
+            return $ocLazyLoad.load(
+            {
+                name:'sbAdminApp',
+                files:[
+                BaseUrl.url+'scripts/authentication/authController.js'
+                ]
+            });
+          }
         }
-    })
+      })
       .state('auth.login',{
         controller:'AuthCtrl',        
-        templateUrl:BaseUrl.url+'views/pages/login.html',
+        templateUrl:BaseUrl.url+'scripts/Modules/authentication/login.html',
         url:'^/login/'
-    })   
+      })
       .state('auth.register',{
        controller:'AuthCtrl',
-       templateUrl:BaseUrl.url+'views/pages/register.html',
+       templateUrl:BaseUrl.url+'scripts/Modules/authentication/register.html',
        url:'^/register/'
-   })
+      })
+      .state('auth.logout',{
+       controller:'AuthCtrl',
+       url:'^/logout/',
+       template:'<div> </div>',
+       resolve: {
+          logout: ['$auth','$state', function($auth, $state) {
+            return $auth.signOut()
+              .then(function(resp) {
+                // handle success response
+                $state.go('auth.login');
+              })
+              .catch(function(resp) {
+                // handle error response
+              });            
+          }]
+        }
+      })
    //-----------------------------------------------------
    // Patient Paths
    // --------------------	

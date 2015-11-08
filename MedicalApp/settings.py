@@ -39,9 +39,11 @@ INSTALLED_APPS = (
     'django.contrib.staticfiles',
 	# django Plugins
     'rest_framework',
+    'rest_framework.authtoken',    
     'simple_history',
 	# Apps
     'Authentication',
+    #'rest_auth'    
     'General',
 	'LIMS',
 )

@@ -78,10 +78,9 @@ from django import core
 class PatientSerializer(serializers.HyperlinkedModelSerializer):
     #full_name = serializers.Field('full_name')
     #full_name = serializers.Field(source='Patient.full_name')
-
     age = serializers.SerializerMethodField()
     history = serializers.SerializerMethodField()
-
+    
     class Meta:
         model = Patient
 
@@ -90,4 +89,13 @@ class PatientSerializer(serializers.HyperlinkedModelSerializer):
 	
     def get_history(self, obj):
         return core.serializers.serialize("json", obj.history.all())
+
+class PatientProfileSerializer(serializers.HyperlinkedModelSerializer):
+    age = serializers.SerializerMethodField()
+
+    class Meta:
+        model = Patient
+
+    def get_age(self, obj):
+        return str(obj.age)
 

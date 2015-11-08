@@ -26,20 +26,25 @@ from django.contrib import admin
 from rest_framework import routers
 #from api import views as api_views
 from Authentication.views import *
+from Authentication.urls import urlpatterns as AuthUrls
 from General.views import *
 from LIMS.views import *
 
 router = routers.DefaultRouter()
+#router = routers.SimpleRouter()
 # Authentication API
 router.register(r'users', UserViewSet)
 # General API
 router.register(r'InsuranceInstitute', InsuranceInstituteViewSet)
-router.register(r'Patient', PatientViewSet)
+# use basename to avoid problems of routers.DefaultRouter() - when using multi serializers for the same model
+# Ref: http://stackoverflow.com/questions/24351287/django-rest-framework-two-different-modelserializers-for-the-same-model
+router.register(r'Patient', PatientViewSet, 'Patient')
 router.register(r'PatientProfile', PatientProfileViewSet)
 router.register(r'Physician', PhysicianViewSet)
 router.register(r'MedicalSpeciality', MedicalSpecialityViewSet)
 # LIMS API
 router.register(r'LabTest', LabTestViewSet)
+
 
 from django.http import HttpRequest
 from django.template import RequestContext
@@ -59,8 +64,7 @@ def home(request):
 urlpatterns = [
     url(r'^$', 'MedicalApp.urls.home', name='home'),
     url(r'^admin/', include(admin.site.urls)),
-    url(r'^api/', include(router.urls)),
-    #url(r'^api/auth/sign_in$',
-    #    AuthView.as_view(),
-    #    name='Sign In')
+    url(r'^api/', include(router.urls))
 ]
+
+urlpatterns += AuthUrls

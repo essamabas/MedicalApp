@@ -16,8 +16,7 @@ angular
     'angular-loading-bar',
     'ngCookies',
     'ipCookie','ng-token-auth',
-    'toggle-switch',
-	'ngResource'
+    'toggle-switch'
   ])
   
   .constant('BaseUrl', {
@@ -166,58 +165,80 @@ angular
       .state('auth.login',{
         controller:'AuthCtrl',        
         templateUrl:BaseUrl.url+'views/pages/login.html',
-        url:'/login'
+        url:'^/login/'
     })   
       .state('auth.register',{
        controller:'AuthCtrl',
        templateUrl:BaseUrl.url+'views/pages/register.html',
-       url:'/register'
+       url:'^/register/'
    })
    //-----------------------------------------------------
    // Patient Paths
    // --------------------	
       .state('dashboard.patientlist',{
-        templateUrl:BaseUrl.url+'scripts/LIMSPatients/views/patient.list.html',
+        templateUrl:BaseUrl.url+'scripts/Modules/dtTable/list.view.html',
         // prefix ^ means absolute urls
-        url:'^/Patient', 
-       controller:'PatientCtrl',
+        url:'^/Patient/', 
+       controller:'PatientListCtrl',
         resolve: {
             loadMyLIMS:function($ocLazyLoad){
                 return $ocLazyLoad.load(
                 {
                     name:'sbAdminApp',
                     files:[
-						BaseUrl.url+'scripts/LIMSPatients/LIMSPatients.module.js'
+                      BaseUrl.url+'scripts/Modules/patient/patient.list.js'
                     ]
                 });
             }
         }        
    })
       .state('dashboard.patientview', {
-          url: "^/Patient/:id/view",
-          templateUrl: BaseUrl.url+'scripts/LIMSPatients/views/patient.view.html',
-		  controller:'PatientCtrl',
-			resolve: {
-				loadMyLIMS:function($ocLazyLoad){
-					return $ocLazyLoad.load(
-					{
-						name:'sbAdminApp',
-						files:[
-							BaseUrl.url+'scripts/LIMSPatients/LIMSPatients.module.js'
-						]
-					});
-				}
-			}		
-    })
-      .state('dashboard.patient.edit', {
-          url: "^/Patient/:id/edit",
-          templateUrl: BaseUrl.url+'scripts/LIMSPatients/views/patient.edit.html',
-          controller: 'PatientCtrl'
-    })
-      .state('dashboard.patient.add', {
-          url: "^/Patient/:id/add",
-          templateUrl: BaseUrl.url+'scripts/LIMSPatients/views/patient.add.html',
-          controller: 'PatientCtrl'
-    })       
+          url: "^/Patient/:id/view/",
+          templateUrl: BaseUrl.url+'scripts/Modules/genericform/generic.view.html',
+          controller:'PatientFormCtrl',
+          resolve: {
+            loadMyLIMS:function($ocLazyLoad){
+              return $ocLazyLoad.load(
+              {
+                name:'sbAdminApp',
+                files:[
+					BaseUrl.url+'scripts/Modules/patient/patient.form.js'
+                ]
+              });
+				    }
+			    }		
+      })
+      .state('dashboard.patientadd', {
+          url: "^/Patient/add/",
+          templateUrl: BaseUrl.url+'scripts/Modules/genericform/generic.view.html',
+          controller:'PatientFormCtrl',
+          resolve: {
+            loadMyLIMS:function($ocLazyLoad){
+              return $ocLazyLoad.load(
+              {
+                name:'sbAdminApp',
+                files:[
+                      BaseUrl.url+'scripts/Modules/patient/patient.form.js'
+                ]
+              });
+						}
+					}
+			})
+      .state('dashboard.profile', {
+          url: "^/Profile/",
+          templateUrl: BaseUrl.url+'scripts/Modules/profile/profile.view.html',
+          controller:'ProfileCtrl',
+          resolve: {
+            loadMyFile:function($ocLazyLoad){
+              return $ocLazyLoad.load(
+              {
+                name:'sbAdminApp',
+                files:[
+									BaseUrl.url+'scripts/Modules/profile/profile.form.js'
+                ]
+              });
+						}
+					}
+			})
 ;
   }]);
