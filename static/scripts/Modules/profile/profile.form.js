@@ -4,7 +4,7 @@ angular.module('sbAdminApp',['ngMessages',{
 	files:[
 		BaseUrl.url+'bower_components/moment/moment.js',		
 		BaseUrl.url+'scripts/Modules/api/api.service.js',
-		BaseUrl.url+'scripts/Modules/genericform/inputs.directive.js'
+		BaseUrl.url+'scripts/Modules/genericform/inputs.directive.js',
 		],
 	cache: true
 	}])
@@ -35,7 +35,7 @@ function ProfileCtrl($scope, PatientProfileService) {
 	$scope.ViewName = "User Profile";
 	
 	//EnableEdit Model-Variables
-	$scope.enableEdit = false;
+	$scope.enableEdit = true;
 	$scope.enableEditFn = function() {
 		$scope.enableEdit = true;
 	};
@@ -144,6 +144,13 @@ function ProfileCtrl($scope, PatientProfileService) {
 						vm.PostOptions[vm.ItemFields[i]].value = vm.Item[vm.ItemFields[i]];
 						vm.PostOptions[vm.ItemFields[i]].placeholder = "";
 						vm.PostOptions[vm.ItemFields[i]].type = "text";
+						vm.PostOptions[vm.ItemFields[i]].name = vm.ItemFields[i];
+						if(vm.PostOptions[vm.ItemFields[i]].max_length == undefined) {
+							vm.PostOptions[vm.ItemFields[i]].max_length ="";
+						}
+						if(vm.PostOptions[vm.ItemFields[i]].min_length == undefined) {
+							vm.PostOptions[vm.ItemFields[i]].min_length ="";
+						}						
 					}
 				}
 			}, function errorCallback(response) {

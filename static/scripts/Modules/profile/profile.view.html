@@ -31,11 +31,13 @@
 			<fieldset ng-disabled="!enableEdit">				
 				<!-- <img ng-src="{{Item.profile_picture}}" class="img-responsive" alt="Profile Picture" />   -->
 				<form-input 
-						type="text" max-length="{{Item.first_name.max_length}}"
+						type="text" 
+						max-length="{{Item.first_name.max_length}}"
 						min-length="{{Item.first_name.min_length}}"
 						labeltext="{{Item.first_name.label}}"
 						placeholder = "{{Item.first_name.label}}"
-						name="{{Item.first_name.label}}" value="{{Item.first_name.value}}">
+						name="{{Item.first_name.name}}" 
+						value="{{Item.first_name.value}}">
 				</form-input>
 			</fieldset>		
 		</form>

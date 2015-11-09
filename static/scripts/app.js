@@ -244,6 +244,7 @@ angular
 			})
       .state('dashboard.profile', {
           url: "^/Profile/",
+          parent :'dashboard',
           views: {
             "": {
               controller: 'ProfileCtrl', // This view will use AppCtrl loaded below in the resolve
@@ -258,7 +259,9 @@ angular
               {
                 name:'sbAdminApp',
                 files:[
-									BaseUrl.url+'scripts/Modules/profile/profile.form.js'
+                  BaseUrl.url+'bower_components/angular-messages/angular-messages.min.js',
+									BaseUrl.url+'scripts/Modules/profile/profile.form.js',
+                  //BaseUrl.url+'scripts/Modules/genericform/inputs.directive.js'                  
                 ]
               });
 						}
