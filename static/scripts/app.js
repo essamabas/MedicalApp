@@ -92,6 +92,7 @@ angular
         templateUrl:BaseUrl.url+'views/pages/blank.html',
         url:'/blank'
     }) 
+	*/
       .state('dashboard.chart',{
         templateUrl:BaseUrl.url+'views/chart.html',
         url:'/chart',
@@ -116,6 +117,7 @@ angular
         templateUrl:BaseUrl.url+'views/table.html',
         url:'/table'
     })
+		/*
       .state('dashboard.panels-wells',{
           templateUrl:BaseUrl.url+'views/ui-elements/panels-wells.html',
           url:'/panels-wells'
@@ -220,7 +222,7 @@ angular
               {
                 name:'sbAdminApp',
                 files:[
-					BaseUrl.url+'scripts/Modules/patient/patient.form.js'
+									BaseUrl.url+'scripts/Modules/patient/patient.form.js'
                 ]
               });
 				    }

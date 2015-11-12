@@ -21,7 +21,19 @@ function formInput ($compile,BaseUrl) {
     restrict: 'E, A, C',
     scope: {},
     link: function(scope, element, attrs) {
-      scope.$watch(attrs,function(newValue,oldValue){
+			scope.opts = {name:"", maxLength:"",minLength:"",placeholder:"",type:"",value:""};
+			
+			attrs.$observe('value', function(newValue,oldValue){
+        //check new value to be what you expect.
+        if (newValue){
+					// your code goes here
+					scope.opts = attrs;
+					//Compile element - could be scope.$parent
+					$compile(element.contents())(scope);					
+				}
+			});
+			
+      scope.$watch(attrs.value,function(newValue,oldValue){
         //check new value to be what you expect.
         if (newValue){           
             // your code goes here

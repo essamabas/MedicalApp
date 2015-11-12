@@ -106,7 +106,7 @@ function ProfileCtrl($scope, PatientProfileService) {
 		// Delete Item
 		bootbox.confirm("You are about to delete this Item from database - Are you Sure?", function(result) {
 			//Example.show("Confirm result: "+result);
-			if(result == true) {
+			if(result === true) {
 				// Delete Item from DB
 				vm.deleteItem();
 			}
@@ -123,7 +123,6 @@ function ProfileCtrl($scope, PatientProfileService) {
 				vm.PostOptions =  options.data.actions.POST;
 				// Get Data
 				vm.getItem();
-				$scope.Item =  vm.PostOptions;
 			}
 		});
 	};
@@ -153,12 +152,16 @@ function ProfileCtrl($scope, PatientProfileService) {
 						}						
 					}
 				}
+				// set OPTIONS structure to model
+				$scope.Item =  vm.PostOptions;
 			}, function errorCallback(response) {
 				// called asynchronously if an error occurs or server returns response with an error status.
 				console.warn("Item is not retrieved  - response: " + JSON.stringify(response));
 				// add radio for each choice
 				$scope.ShowpostErrors = true;
 				$scope.postErrors = JSON.stringify(response.data);
+				// set OPTIONS structure to model
+				$scope.Item =  vm.PostOptions;			
 			});
 	};
 
