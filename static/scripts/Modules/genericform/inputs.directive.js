@@ -21,17 +21,41 @@ function formInput($compile,BaseUrl) {
         restrict: 'E',
         template:
 						'<div class="form-group has-feedback ng-scope">' +
-    				'<label class="control-label" for="ctrl.inputname" >  </label> ' + 			
-            '<input type="text" ng-model="ctrl.model" name="ctrl.inputname" />' + 
-            '<div ng-messages="ctrl.$error" role="alert" ng-transclude>' +
+    				'<label class="col-sm-2 control-label" for="ctrl.inputname" ng-bind="ctrl.labeltext">  </label> ' +
+						'<div class="col-sm-10">' + 
+							'<input type="text" class="form-control" ng-model="ctrl.model" name="{{ctrl.inputname}}" id="{{ctrl.inputname}}" placeholder="{{ctrl.placeholder}}" ng-maxlength="ctrl.maxLength" > </input>' + 
+							'<p class="help-block" ng-bind="ctrl.help_text"></p>' + 
+							'<div ng-messages="ctrl.$error" role="alert">' +
+								'<ng-transclude></ng-transclude>' +
+							'</div>' + 
             '</div>',
         transclude: true,
         scope: {},
         require: ['ngModel', 'formInput'],
-        link: function(scope, elem, attrs, ctrls) {
+        link: function(scope, element, attrs, ctrls) {
             var ngModel = ctrls[0];
             var formInput = ctrls[1];
-            formInput.inputname = attrs.inputname;
+						formInput.inputname = "";
+						formInput.max_length = "";
+						formInput.min_length = "";
+						formInput.placeholder = "";
+						formInput.labeltext = "";
+						formInput.help_text = "";
+						attrs.$observe('options', function(newValue,oldValue){
+							//check new value to be what you expect.
+							if (newValue){
+								newValue = JSON.parse(newValue);
+								formInput.inputname = newValue.name;
+								formInput.max_length = newValue.max_length;
+								formInput.min_length = newValue.min_length;
+								formInput.placeholder = newValue.label;
+								formInput.labeltext = newValue.label;
+								if(newValue.help_text) {formInput.help_text = newValue.label;}
+								formInput.setModel(ngModel);
+								//Compile element - could be scope.$parent
+								//$compile(element.contents())(scope);
+							}
+						});
             formInput.setModel(ngModel);
         },
         controllerAs: 'ctrl',
