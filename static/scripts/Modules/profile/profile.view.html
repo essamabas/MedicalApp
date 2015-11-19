@@ -29,7 +29,7 @@
 				</div>
 			</div>
 			<fieldset ng-disabled="!enableEdit">				
-				<!-- <img ng-src="{{Item.profile_picture}}" class="img-responsive" alt="Profile Picture" />   -->
+				<!-- <img ng-src="{{Item.profile_picture}}" class="img-responsive" alt="Profile Picture" />   
 				<form-input 
 						type="text" 
 						max-length="{{Item.first_name.max_length}}"
@@ -38,7 +38,10 @@
 						placeholder = "{{Item.first_name.label}}"
 						name="{{Item.first_name.name}}" 
 						value="{{Item.first_name.value}}">
-				</form-input>
+				</form-input> -->
+				<form-input ng-model="Item.first_name" inputname="first_name" ng-required="true">
+						<div ng-message="required">Required field</div>
+				</form-input>				
 			</fieldset>		
 		</form>
 

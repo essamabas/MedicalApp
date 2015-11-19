@@ -1,11 +1,12 @@
 
   <!-- Ref: https://docs.angularjs.org/api/ngMessages  -->
   <div class="form-group has-feedback ng-scope">
-    <label class="control-label" for="myForm.{{opts.name}}" ng-bind={{opts.labeltext}}>
+    <label class="control-label" for="{{opts.name}}" ng-bind={{opts.labeltext}}>
       <input 
           class="form-control ng-valid-maxlength ng-touched ng-dirty ng-valid-parse ng-invalid ng-invalid-required"            
           type="{{opts.type}}" name="{{opts.name}}" 
           ng-model="opts.value"
+          id="{{opts.name}}"
           placeholder="{{opts.placeholder}}" 
           ng-maxlength="{{opts.maxLength}}" required/>
     </label>
