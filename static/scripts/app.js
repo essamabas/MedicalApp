@@ -1,4 +1,4 @@
-'use strict';
+
 /**
  * @ngdoc overview
  * @name sbAdminApp
@@ -8,8 +8,10 @@
  * Main module of the application.
  */
 
-angular
-  .module('sbAdminApp', [
+define(['common'], function (angularAMD) {
+
+  'use strict';
+	var app = angular.module('sbAdminApp', [
     'oc.lazyLoad',
     'ui.router',
     'ui.bootstrap',
@@ -271,3 +273,6 @@ angular
 			})     
 ;
   }]);
+
+  return angularAMD.bootstrap(app);
+});
