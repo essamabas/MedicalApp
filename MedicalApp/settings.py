@@ -40,7 +40,7 @@ INSTALLED_APPS = (
 	# django Plugins
     'rest_framework',
     'rest_framework.authtoken',    
-    'simple_history',
+    #'simple_history',
 	# Apps
     'Authentication',
     #'rest_auth'    
@@ -58,7 +58,7 @@ MIDDLEWARE_CLASSES = (
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
     'django.middleware.security.SecurityMiddleware',
     # History	
-    'simple_history.middleware.HistoryRequestMiddleware',
+    #'simple_history.middleware.HistoryRequestMiddleware',
 )
 
 ROOT_URLCONF = 'MedicalApp.urls'

@@ -26,7 +26,6 @@ class PatientProfileViewSet(viewsets.ModelViewSet):
     def get_queryset(self):
         """return a list of all the Patients for the currently authenticated user."""
         if self.request.user != None:
-        	print self.request.user
         	user = self.request.user
         	return Patient.objects.filter(user=user)
         return Null

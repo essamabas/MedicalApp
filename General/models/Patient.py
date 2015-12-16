@@ -7,7 +7,7 @@ from .InsuranceInstitute import *
 from django.core.validators import RegexValidator
 
 from rest_framework import serializers
-from simple_history.models import HistoricalRecords
+#from simple_history.models import HistoricalRecords
 #from workflows.models import Workflow, State, Transition
 
 # -----------------------
@@ -54,7 +54,7 @@ class Patient(models.Model):
     marital_status = models.CharField(_("marital_status"),max_length=10, choices=MARTIAL_CHOICES)
     active = models.BooleanField(default=True,
                                  help_text="Flag to indicate that the patient is active. - it can be compared with last activity date, such as: updated_on/death_date/..")
-    history = HistoricalRecords()
+    #history = HistoricalRecords()
 
     def _get_age(self):
         today = datetime.now()
